@@ -1,0 +1,46 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "amplifychatbotcb1cf1dc_identitypool_cb1cf1dc",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "amplifcb1cf1dc",
+    "userPoolName": "amplifychatbotcb1cf1dc_userpool_cb1cf1dc",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+      "email"
+    ],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientLambdaRole": "amplifcb1cf1dc_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "cb1cf1dc",
+    "resourceName": "amplifychatbotcb1cf1dc",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "default",
+    "triggers": {},
+    "userPoolGroupList": [],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}
