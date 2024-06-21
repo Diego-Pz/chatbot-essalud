@@ -1,0 +1,79 @@
+<div class="w-full relative h-full flex flex-col gap-2.5 p-2.5 bg-[#F7F2FA] botonApariencia !rounded-none">
+    <div class="py-[7px] flex flex-row shrink-0">
+        <div class="p-2 rounded-2xl hover:botonApariencia hover:cursor-pointer hover:bg-gray-200 select-none">
+            <div class="px-[3px] py-1.5">
+                <img src="assets/svg/icon-sidenav-three-bars.svg" />
+            </div>
+        </div>
+    </div>
+    <div class="py-2.5 px-1 flex flex-col justify-between grow">
+        <div class="flex flex-col gap-3">
+            <span class="font-bold text-[#1D1B20]">Archivos recientes</span>
+            <div class="flex flex-col gap-2.5">
+                <div class="flex flex-row gap-2.5 pr-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200">
+                    <img src="assets/svg/icon-sidenav-bubble-text.svg" />
+                    <span>TyC - Seguro regular.pdf</span>
+                </div>
+                <div class="flex flex-row gap-2.5 pr-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200">
+                    <img src="assets/svg/icon-sidenav-bubble-text.svg" />
+                    <span>Coberturas.pdf</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-3 pb-4">
+            <span class="font-bold text-[#1D1B20]">Tipos de seguros</span>
+            <ul class="flex flex-col gap-2.5">
+                <li>
+                    <input type="checkbox" id="tipo-seguro-1" value="" class="hidden peer" required="">
+                    <label for="tipo-seguro-1" class="inline-flex items-center justify-center w-full py-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded-3xl cursor-pointer peer-checked:border-blue-600 peer-checked:bg-[#4F4F4F42] hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                        <span class="text-center font-semibold">Regular</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="tipo-seguro-2" value="" class="hidden peer">
+                    <label for="tipo-seguro-2" class="inline-flex items-center justify-center w-full py-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded-3xl cursor-pointer peer-checked:border-blue-600 peer-checked:bg-[#4F4F4F42] hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                        <span class="text-center font-semibold">Potestativo</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="tipo-seguro-3" value="" class="hidden peer">
+                    <label for="tipo-seguro-3" class="inline-flex items-center justify-center w-full py-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded-3xl cursor-pointer peer-checked:border-blue-600 peer-checked:bg-[#4F4F4F42] hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                        <span class="text-center font-semibold">Trabajo de Riesgo</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="tipo-seguro-4" value="" class="hidden peer">
+                    <label for="tipo-seguro-4" class="inline-flex items-center justify-center w-full py-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded-3xl cursor-pointer peer-checked:border-blue-600 peer-checked:bg-[#4F4F4F42] hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                        <span class="text-center font-semibold">Agrario</span>
+                    </label>
+                </li>
+                <li>
+                    <input type="checkbox" id="tipo-seguro-5" value="" class="hidden peer">
+                    <label for="tipo-seguro-5" class="inline-flex items-center justify-center w-full py-2.5 text-gray-500 bg-white border-2 border-gray-200 rounded-3xl cursor-pointer peer-checked:border-blue-600 peer-checked:bg-[#4F4F4F42] hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">
+                        <span class="text-center font-semibold">Contra Accidentes</span>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="flex flex-col gap-1 py-2.5 px-2 text-[#79747E] font-bold">
+        <div class="flex flex-row gap-[18px] px-1 py-2 rounded cursor-pointer hover:bg-gray-200">
+            <div class="w-4 flex items-center justify-center">
+                <img src="assets/svg/icon-sidenav-alert.svg" />
+            </div>
+            <span>Ayuda</span>
+        </div>
+        <div class="flex flex-row gap-[18px] px-1 py-2 rounded cursor-pointer hover:bg-gray-200">
+            <div class="w-4 flex items-center justify-center">
+                <img src="assets/svg/icon-sidenav-star.svg" />
+            </div>
+            <span>Calificar</span>
+        </div>
+        <div class="flex flex-row gap-[18px] px-1 py-2 rounded cursor-pointer hover:bg-gray-200">
+            <div class="w-4 flex items-center justify-center">
+                <img src="assets/svg/icon-sidenav-config.svg" />
+            </div>
+            <span>Configuraciones</span>
+        </div>
+    </div>
+</div>
