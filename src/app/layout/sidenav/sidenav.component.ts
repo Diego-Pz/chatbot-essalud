@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class SidenavComponent {
 
+  @Output() toggleSidenav = new EventEmitter();
+  userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
+  
+  onToggleSidenav(): void {
+    this.toggleSidenav.emit();
+  }
 }

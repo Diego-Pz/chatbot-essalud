@@ -1,16 +1,16 @@
-<div class="w-full h-screen grid grid-cols-[250px_calc(100vw-250px)] overflow-x-hidden">
-    <div #drawer mode="side" class="bg-side" id="sidenav">
-      <app-sidenav></app-sidenav>
-    </div>
-    <div class="flex flex-col">
-      <app-toolbar></app-toolbar>
-      <div class="px-5 py-5 flex justify-center grow">
-        <div class="grow">
-          <router-outlet></router-outlet>
-        </div>
-        <!-- <div>
-          <h1 class="text-3xl font-semibold">Lista de Usuarios</h1>
-        </div> -->
+<mat-drawer-container class="w-full h-screen grid grid-cols-[250px_calc(100vw-250px)] overflow-x-hidden">
+  <mat-drawer #drawer [(opened)]="opened" mode="side" class="bg-side" id="sidenav">
+    <app-sidenav (toggleSidenav)="drawer.toggle()"></app-sidenav>
+  </mat-drawer>
+  <mat-drawer-content class="!flex flex-col bg-white">
+    <app-toolbar></app-toolbar>
+    <div class="px-5 py-5 flex justify-center grow">
+      <div class="grow">
+        <router-outlet></router-outlet>
       </div>
+      <!-- <div>
+        <h1 class="text-3xl font-semibold">Lista de Usuarios</h1>
+      </div> -->
     </div>
-  </div>
+  </mat-drawer-content>
+</mat-drawer-container>

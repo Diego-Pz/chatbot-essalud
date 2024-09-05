@@ -1,0 +1,79 @@
+<div class="min-h-screen flex flex-col min-[720px]:flex-row items-center justify-center">
+    <div class="grow pt-9 w-full flex justify-center" *ngIf="isMovil">
+        <div class="flex flex-col gap-8 w-4/5 max-w-[400px]" [formGroup]="formLogin">
+          <span class="text-[32px] leading-[32px] font-medium text-center text-white">{{ preLoginConfirmed ? 'Seleccionar Centro' : 'Iniciar Sesión'}}</span>
+          <div class="flex flex-col gap-1">
+            <div class="relative">
+              <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+              <div type="button" class="inset-y-0 mr-4 right-0 absolute pointer-events-none flex items-center">
+                <img class="w-5" src="assets/svg/icon-user.svg" alt="">
+              </div>
+            </div>
+            <div *ngIf="formLogin.controls.ctrlUser.touched && formLogin.controls.ctrlUser.invalid">
+                <span *ngIf="formLogin.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    N° de Documento requerido.
+                </span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1">
+            <div class="relative">
+              <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+              <div type="button" class="inset-y-0 mr-4 right-0 absolute flex items-center cursor-pointer" (click)="seePass = !seePass">
+                <img class="w-5" src="assets/svg/icon-password.svg" alt="">
+              </div>
+            </div>
+            <div *ngIf="formLogin.controls.ctrlPass.touched && formLogin.controls.ctrlPass.invalid">
+                <span *ngIf="formLogin.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Contraseña requerida.
+                </span>
+            </div>
+          </div>
+          <app-btn [ngClass]="preLoginConfirmed ? null : 'mt-8'" [color]="'base'" (click)="checkLogin()" [loading]="wait">INICIAR SESIÓN</app-btn>
+        </div>
+      </div>
+      <div class="flex-1 flex justify-center items-center" *ngIf="!isMovil">
+        <div class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5 min-[769px]:w-4/5 max-w-[500px]" [formGroup]="formLogin">
+          <div class="flex flex-col gap-4 px-[39.5px] items-center mb-4 min-[769px]:mb-10">
+            <div class="w-full" *ngIf="preLoginConfirmed">
+              <img class="w-10 cursor-pointer" src="assets/svg/icon-login-arrow-left.svg" alt="" (click)="anulatePreLogin()">
+            </div>
+            <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">{{ preLoginConfirmed ? 'Seleccionar Centro' : 'Iniciar Sesión'}}</span>
+            <mat-divider class="w-full"></mat-divider>
+            <span class="max-[934px]:text-[16px] text-[28px] leading-[28px] font-medium text-[var(--color-base-claro)] text-center" *ngIf="!preLoginConfirmed">¡Bienvenido!</span>
+          </div>
+          <div class="flex flex-col px-[45.5px] gap-8">
+            <div class="flex flex-col gap-1">
+              <div class="relative">
+                <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+                <div type="button" class="inset-y-0 mr-4 right-0 absolute pointer-events-none flex items-center">
+                  <img class="w-5" src="assets/svg/icon-user.svg" alt="">
+                </div>
+              </div>
+              <div *ngIf="formLogin.controls.ctrlUser.touched && formLogin.controls.ctrlUser.invalid">
+                  <span *ngIf="formLogin.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                      N° de Documento requerido.
+                  </span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-1">
+              <div class="relative">
+                <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+                <div type="button" class="inset-y-0 mr-4 right-0 absolute flex items-center cursor-pointer" (click)="seePass = !seePass">
+                  <img class="w-5" src="assets/svg/icon-password.svg" alt="">
+                </div>
+              </div>
+              <div *ngIf="formLogin.controls.ctrlPass.touched && formLogin.controls.ctrlPass.invalid">
+                  <span *ngIf="formLogin.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                      Contraseña requerida.
+                  </span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-3 items-center">
+              <app-btn class="!text-base w-3/5" [color]="'base'" [loading]="true" (click)="checkLogin()" [loading]="wait">INICIAR SESIÓN</app-btn>
+              <app-btn class="w-3/5" color="bordeado" (click)="goToRegister()">REGISTRARSE</app-btn>
+              <a [routerLink]="['/']">¿Olvidaste tu contraseña?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

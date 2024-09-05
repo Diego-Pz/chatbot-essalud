@@ -1,0 +1,12 @@
+.fondoLogueo{
+    background-image: var(--color-Mezclado);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: 1340px) {
+    .fondoLogueo{
+        background-position: unset;
+    }
+}

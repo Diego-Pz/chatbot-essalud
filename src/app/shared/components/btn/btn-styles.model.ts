@@ -1,0 +1,1 @@
+export type BtnStyles = 'success' | 'primary' | 'danger' | 'light' | 'cancel' | 'sky' | "white" | "mezclado" | 'transparente' | 'transparenteCancel' | "bordeado" | 'base' | "none" | "btnEvaluacion" | "btnEvaluacionWhite";
