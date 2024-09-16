@@ -2,6 +2,7 @@ export class AppRoute {
   static readonly DIRECCION_MONITOREO = 'management';
   static readonly AUTH = 'auth';
   static readonly REGISTER = 'register';
+  static readonly CHANGE_PASSWORD = 'change-pass';
   // ADMINISTRACIÓN ----------------------------------------------------------------------------------------------------------
   // --------------------------------------------------------------------------------------------------------------- PACIENTES
   static readonly MOD_PACIENTES = 'pacientes';

@@ -1,96 +1,112 @@
 <div class="min-h-screen flex flex-col min-[720px]:flex-row items-center justify-center">
-    <div class="grow pt-9 w-full flex justify-center" *ngIf="isMovil">
-        <div class="flex flex-col gap-8 w-4/5 max-w-[500px]" [formGroup]="formLogin">
-          <span class="text-[32px] leading-[32px] font-medium text-center text-white">{{ preLoginConfirmed ? 'Seleccionar Centro' : 'Iniciar Sesión'}}</span>
+    <div class="grow w-full flex justify-center relative" *ngIf="isMovil">
+      <img class="absolute w-[37.5px] right-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnLogin()" src="assets/svg/icon-close-dialog.svg" alt="">
+        <div class="flex flex-col gap-8 w-4/5 max-w-[500px] pt-9" [formGroup]="formRegister">
+          <span class="text-[32px] leading-[32px] font-medium text-center text-white">Iniciar Sesión</span>
           <div class="flex flex-col gap-1">
             <div class="relative">
-              <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+              <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
               <div type="button" class="inset-y-0 mr-4 right-0 absolute pointer-events-none flex items-center">
                 <img class="w-5" src="assets/svg/icon-user.svg" alt="">
               </div>
             </div>
-            <div *ngIf="formLogin.controls.ctrlUser.touched && formLogin.controls.ctrlUser.invalid">
-                <span *ngIf="formLogin.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+            <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
+                <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     N° de Documento requerido.
                 </span>
             </div>
           </div>
           <div class="flex flex-col gap-1">
             <div class="relative">
-              <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+              <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
               <div type="button" class="inset-y-0 mr-4 right-0 absolute flex items-center cursor-pointer" (click)="seePass = !seePass">
                 <img class="w-5" src="assets/svg/icon-password.svg" alt="">
               </div>
             </div>
-            <div *ngIf="formLogin.controls.ctrlPass.touched && formLogin.controls.ctrlPass.invalid">
-                <span *ngIf="formLogin.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+            <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid">
+                <span *ngIf="formRegister.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     Contraseña requerida.
                 </span>
             </div>
           </div>
-          <app-btn [ngClass]="preLoginConfirmed ? null : 'mt-8'" [color]="'base'" (click)="checkRegister()" [loading]="wait">Enviar</app-btn>
+          <app-btn class="mt-8" [color]="'base'" (click)="checkRegister()" [loading]="wait">Enviar</app-btn>
         </div>
       </div>
       <div class="flex-1 flex justify-center items-center" *ngIf="!isMovil">
-        <div class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5 min-[769px]:w-4/5 max-w-[500px]" [formGroup]="formLogin">
-          <div class="flex flex-col gap-4 px-[39.5px] items-center mb-4 min-[769px]:mb-10">
-            <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">Registrar</span>
-          </div>
-          <div class="flex flex-col px-[45.5px] gap-8">
-            <div class="flex flex-row gap-4">
+        <div class="relative min-[769px]:w-4/5 max-w-[500px]">
+          <img class="absolute w-[37.5px] right-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnLogin()" src="assets/svg/icon-close-dialog.svg" alt="">
+          <div class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5" [formGroup]="formRegister">
+            <div class="flex flex-col gap-4 px-[39.5px] items-center mb-4 min-[769px]:mb-10">
+              <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">Registrar</span>
+            </div>
+            <div class="flex flex-col px-[45.5px] gap-8">
+              <div class="flex flex-row gap-4">
+                  <div class="flex flex-col gap-1">
+                    <div class="relative">
+                      <input #nameInput placeholder="Tipo de Documento *" formControlName="ctrlTipo" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                    </div>
+                    <div *ngIf="formRegister.controls.ctrlTipo.touched && formRegister.controls.ctrlTipo.invalid">
+                        <span *ngIf="formRegister.controls.ctrlTipo.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                          Tipo de documento requerido
+                        </span>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <div class="relative">
+                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                    </div>
+                    <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
+                        <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                            N° de Documento requerido
+                        </span>
+                    </div>
+                  </div>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="Fecha de Vencimiento *" formControlName="ctrlFechaVenc" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlFechaVenc.touched && formRegister.controls.ctrlFechaVenc.invalid">
+                    <span *ngIf="formRegister.controls.ctrlFechaVenc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Fecha de vencimiento requerida
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="Email *" formControlName="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlEmail.touched && formRegister.controls.ctrlEmail.invalid">
+                    <span *ngIf="formRegister.controls.ctrlEmail.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Correo requerido
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-row gap-4">
                 <div class="flex flex-col gap-1">
                   <div class="relative">
-                    <input #nameInput placeholder="Tipo de Documento *" formControlName="ctrlTipo" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+                    <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                   </div>
-                  <div *ngIf="formLogin.controls.ctrlTipo.touched && formLogin.controls.ctrlTipo.invalid">
-                      <span *ngIf="formLogin.controls.ctrlTipo.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                        Tipo de documento requerido
+                  <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid">
+                      <span *ngIf="formRegister.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                          Contraseña requerida
                       </span>
                   </div>
                 </div>
                 <div class="flex flex-col gap-1">
                   <div class="relative">
-                    <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
+                    <input #nameInput placeholder="Confirmar contraseña *" formControlName="ctrlPassAgain" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                   </div>
-                  <div *ngIf="formLogin.controls.ctrlUser.touched && formLogin.controls.ctrlUser.invalid">
-                      <span *ngIf="formLogin.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                          N° de Documento requerido
+                  <div *ngIf="formRegister.controls.ctrlPassAgain.touched && formRegister.controls.ctrlPassAgain.invalid">
+                      <span *ngIf="formRegister.controls.ctrlPassAgain.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                          Confirmación requerida
                       </span>
                   </div>
                 </div>
-            </div>
-            <div class="flex flex-col gap-1">
-              <div class="relative">
-                <input #nameInput placeholder="Fecha de Vencimiento *" formControlName="ctrlFechaVenc" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
               </div>
-              <div *ngIf="formLogin.controls.ctrlFechaVenc.touched && formLogin.controls.ctrlFechaVenc.invalid">
-                  <span *ngIf="formLogin.controls.ctrlFechaVenc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                      Fecha de vencimiento requerida
-                  </span>
+              <div class="flex flex-col gap-3 items-center">
+                <app-btn class="!text-base w-3/5" [color]="'base'" (click)="checkRegister()" [loading]="wait">REGISTRAR</app-btn>
               </div>
-            </div>
-            <div class="flex flex-col gap-1">
-              <div class="relative">
-                <input #nameInput placeholder="Email *" formControlName="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
-              </div>
-              <div *ngIf="formLogin.controls.ctrlEmail.touched && formLogin.controls.ctrlEmail.invalid">
-                  <span *ngIf="formLogin.controls.ctrlEmail.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                      Correo requerido
-                  </span>
-              </div>
-            </div>
-            <div class="flex flex-col gap-1">
-              <div class="relative">
-                <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="preLoginConfirmed ? 'bg-gray-200' : 'bg-white'" [readOnly]="preLoginConfirmed"/>
-              </div>
-              <div *ngIf="formLogin.controls.ctrlPass.touched && formLogin.controls.ctrlPass.invalid">
-                  <span *ngIf="formLogin.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                      Contraseña requerida
-                  </span>
-              </div>
-            </div>
-            <div class="flex flex-col gap-3 items-center">
-              <app-btn class="!text-base w-3/5" [color]="'base'" [loading]="true" (click)="checkRegister()" [loading]="wait">REGISTRAR</app-btn>
             </div>
           </div>
         </div>

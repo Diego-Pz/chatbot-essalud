@@ -5,6 +5,7 @@ import { redirectUserGuard } from 'src/app/data/guards/redirecth-user.guard';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,17 @@ const routes: Routes = [
         path: AppRoute.REGISTER,
         component: RegisterUserComponent,
         title: 'Registrarse como Usuario'
-      }
+      },
+      {
+        path: AppRoute.CHANGE_PASSWORD,
+        component: RecoverPasswordComponent,
+        title: 'Recuperar Contraseña'
+      },
+      { 
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: '',
+      },
     ]
   },
   {

@@ -8,6 +8,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { MaterialModule } from '../material/material.module';
   imports: [
     CommonModule,
     LayoutRoutingModule,
+    ReactiveFormsModule,
     CdkMenuModule,
     MaterialModule,
     SharedModule

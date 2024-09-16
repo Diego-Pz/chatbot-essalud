@@ -6,22 +6,17 @@ import { AppRoute } from 'src/app/data/constants/app-route.constant';
 import { NotificationService } from 'src/app/data/service/notification.service';
 
 @Component({
-  selector: 'app-register-user',
-  templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.scss']
+  selector: 'app-recover-password',
+  templateUrl: './recover-password.component.html',
+  styleUrls: ['./recover-password.component.scss']
 })
-export class RegisterUserComponent {
+export class RecoverPasswordComponent {
   faSpinner = faSpinner;
   wait = false;
   seePass = false;
   
-  formRegister = this._formBuilder.group({
-    ctrlUser: ['', Validators.required],
-    ctrlTipo: ['', Validators.required],
-    ctrlFechaVenc: ['', Validators.required],
+  formChangePass = this._formBuilder.group({
     ctrlEmail: ['', [Validators.required, Validators.email]],
-    ctrlPass: ['', Validators.required],
-    ctrlPassAgain: ['', Validators.required]
   });
 
   isMovil = false;
@@ -37,17 +32,16 @@ export class RegisterUserComponent {
   }
 
   checkRegister(){
-    if (this.formRegister.valid) {
-      localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
-      this.notificationService.success('Se registró el usuario correctamente');
-      this.router.navigate(['/']);
+    if (this.formChangePass.valid) {
+      this.notificationService.success('Se envió una nueva contraseña a su correo');
+      this.router.navigate(['/' + AppRoute.AUTH]);
     }
     else{
-      if (this.formRegister.controls.ctrlEmail.hasError('email') || this.formRegister.controls.ctrlPass.value != this.formRegister.controls.ctrlPassAgain.value) {
-        this.notificationService.warning('No se puede registrar el usuario por campos erróneos');
+      if (this.formChangePass.controls.ctrlEmail.hasError('email')) {
+        this.notificationService.warning('El correo ingresado no es válido');
       }
       else{
-        this.notificationService.warning('No se puede registrar el usuario por campos vacíos');
+        this.notificationService.warning('El campo correo se encuentra vacío');
       }
     }
   }

@@ -8,13 +8,15 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 
 @NgModule({
   declarations: [
     LoginUserComponent,
     RegisterUserComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     CommonModule,
