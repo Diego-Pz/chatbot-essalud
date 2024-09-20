@@ -2,7 +2,7 @@
     <div class="grow w-full flex justify-center relative" *ngIf="isMovil">
       <img class="absolute w-[37.5px] right-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnLogin()" src="assets/svg/icon-close-dialog.svg" alt="">
         <div class="flex flex-col gap-8 w-4/5 max-w-[500px] pt-9" [formGroup]="formRegister">
-          <span class="text-[32px] leading-[32px] font-medium text-center text-white">Iniciar Sesión</span>
+          <span class="text-[32px] leading-[32px] font-medium text-center text-white">Registrar</span>
           <div class="flex flex-col gap-1">
             <div class="relative">
               <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
@@ -43,7 +43,12 @@
               <div class="flex flex-row gap-4">
                   <div class="flex flex-col gap-1">
                     <div class="relative">
-                      <input #nameInput placeholder="Tipo de Documento *" formControlName="ctrlTipo" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                      <select formControlName="ctrlTipo"
+                        class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border">
+                        <option [value]="null" disabled selected>Tipos de Documento</option>
+                        <option [value]='1'>DNI</option>
+                        <option [value]='2'>Carnet de Extranjería</option>
+                      </select>
                     </div>
                     <div *ngIf="formRegister.controls.ctrlTipo.touched && formRegister.controls.ctrlTipo.invalid">
                         <span *ngIf="formRegister.controls.ctrlTipo.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
@@ -53,7 +58,7 @@
                   </div>
                   <div class="flex flex-col gap-1">
                     <div class="relative">
-                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                     </div>
                     <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
                         <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
@@ -63,8 +68,12 @@
                   </div>
               </div>
               <div class="flex flex-col gap-1">
+                <mat-form-field style="position: absolute; visibility:hidden;">
+                  <input #input matInput [matDatepicker]="picker">
+                  <mat-datepicker #picker (closed)="formRegister.controls.ctrlFechaVenc.setValue(input.value)"></mat-datepicker>
+                </mat-form-field>
                 <div class="relative">
-                  <input #nameInput placeholder="Fecha de Vencimiento *" formControlName="ctrlFechaVenc" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                  <input #nameInput placeholder="Fecha de Vencimiento *" readonly (click)="picker.open()" formControlName="ctrlFechaVenc" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                 </div>
                 <div *ngIf="formRegister.controls.ctrlFechaVenc.touched && formRegister.controls.ctrlFechaVenc.invalid">
                     <span *ngIf="formRegister.controls.ctrlFechaVenc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
@@ -80,6 +89,9 @@
                     <span *ngIf="formRegister.controls.ctrlEmail.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                         Correo requerido
                     </span>
+                    <span *ngIf="formRegister.controls.ctrlEmail.hasError('email')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Formato de correo no valido
+                    </span>
                 </div>
               </div>
               <div class="flex flex-row gap-4">
@@ -92,6 +104,9 @@
                           Contraseña requerida
                       </span>
                   </div>
+                  <span *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.value != formRegister.controls.ctrlPassAgain.value" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                      Las contraseñas no coinciden
+                  </span>
                 </div>
                 <div class="flex flex-col gap-1">
                   <div class="relative">

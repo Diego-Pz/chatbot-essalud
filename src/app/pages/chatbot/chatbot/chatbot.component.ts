@@ -5,6 +5,7 @@ import { ChatbotService } from 'src/app/data/service/chatbot.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 import { DialogPreguntasFrecuentesComponent } from '../components/dialog-preguntas-frecuentes/dialog-preguntas-frecuentes.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { AuthUserService } from 'src/app/data/service/auth-user.service';
 
 @Component({
   selector: 'app-chatbot',
@@ -22,6 +23,7 @@ export class ChatbotComponent {
 
   constructor(private chatbotService                      : ChatbotService,
               private notificationService                 : NotificationService,
+              private authService                         : AuthUserService,
               private dialog                              : Dialog,
               private _formBuilder                        : FormBuilder
   ){

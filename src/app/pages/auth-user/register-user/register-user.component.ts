@@ -3,6 +3,8 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AppRoute } from 'src/app/data/constants/app-route.constant';
+import { RequestRegisterUser } from 'src/app/data/models/auth-user.model';
+import { AuthUserService } from 'src/app/data/service/auth-user.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 
 @Component({
@@ -17,7 +19,7 @@ export class RegisterUserComponent {
   
   formRegister = this._formBuilder.group({
     ctrlUser: ['', Validators.required],
-    ctrlTipo: ['', Validators.required],
+    ctrlTipo: [null, Validators.required],
     ctrlFechaVenc: ['', Validators.required],
     ctrlEmail: ['', [Validators.required, Validators.email]],
     ctrlPass: ['', Validators.required],
@@ -26,9 +28,10 @@ export class RegisterUserComponent {
 
   isMovil = false;
 
-  constructor(private router: Router,
-              private _formBuilder: FormBuilder,
-              private notificationService: NotificationService){
+  constructor(private router                : Router,
+              private _formBuilder          : FormBuilder,
+              private authService           : AuthUserService,
+              private notificationService   : NotificationService){
 
   }
 
@@ -36,11 +39,13 @@ export class RegisterUserComponent {
     this.comprobacionMovil();
   }
 
-  checkRegister(){
+  checkRegister(){console.log(this.getPayload())
     if (this.formRegister.valid) {
-      localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
-      this.notificationService.success('Se registró el usuario correctamente');
-      this.router.navigate(['/']);
+      this.authService.registerUser(this.getPayload()).then((data)=>{
+        this.notificationService.success('Se registró el usuario correctamente');
+        this.router.navigate(['/login']);
+      })
+      // localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
     }
     else{
       if (this.formRegister.controls.ctrlEmail.hasError('email') || this.formRegister.controls.ctrlPass.value != this.formRegister.controls.ctrlPassAgain.value) {
@@ -49,6 +54,22 @@ export class RegisterUserComponent {
       else{
         this.notificationService.warning('No se puede registrar el usuario por campos vacíos');
       }
+      this.formRegister.markAllAsTouched()
+    }
+  }
+
+  getPayload(): RequestRegisterUser{
+    let fecha = this.formRegister.controls.ctrlFechaVenc.value!;    
+    if (fecha) {
+      fecha = `${fecha.split('/')[2]}-${fecha.split('/')[1]}-${fecha.split('/')[0]}`;
+    }
+
+    return {
+      email: this.formRegister.controls.ctrlEmail.value!,
+      identification: this.formRegister.controls.ctrlUser.value!,
+      password: this.formRegister.controls.ctrlPass.value!,
+      document_type: this.formRegister.controls.ctrlTipo.value!,
+      date_expiration: fecha
     }
   }
 
