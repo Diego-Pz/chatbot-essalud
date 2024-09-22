@@ -5,3 +5,8 @@ export interface RequestRegisterUser{
     document_type: number,
     date_expiration: string
 }
+
+export interface RequestLoginUser{
+    identification: string,
+    password: string
+}

@@ -8,7 +8,9 @@ import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppConfig } from './configs/app.config';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NotifierInterceptor } from './data/interceptors/notifier.interceptor';
+import { AuthInterceptor } from './data/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,18 @@ import { HttpClientModule } from '@angular/common/http';
     ToastrModule.forRoot(AppConfig.TOAST_CONFIG),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NotifierInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

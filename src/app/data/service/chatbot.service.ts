@@ -4,7 +4,7 @@ import { RequestComunicacionChatbot } from '../models/chatbot.model';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 
-const URL_BASE = `${environment.API}/chatgpt`;
+const URL_BASE = `${environment.API}`;
 
 @Injectable({
   providedIn: 'root'

@@ -39,13 +39,17 @@ export class RegisterUserComponent {
     this.comprobacionMovil();
   }
 
-  checkRegister(){console.log(this.getPayload())
+  checkRegister(){
     if (this.formRegister.valid) {
-      this.authService.registerUser(this.getPayload()).then((data)=>{
-        this.notificationService.success('Se registró el usuario correctamente');
-        this.router.navigate(['/login']);
+      this.authService.registerUser(this.getPayload()).subscribe({
+        next: (data)=>{
+          this.notificationService.success('Se registró el usuario correctamente');
+          this.router.navigate(['/auth']);
+        },
+        error: (error)=>{
+          this.notificationService.warning(error.error.error);
+        }
       })
-      // localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
     }
     else{
       if (this.formRegister.controls.ctrlEmail.hasError('email') || this.formRegister.controls.ctrlPass.value != this.formRegister.controls.ctrlPassAgain.value) {

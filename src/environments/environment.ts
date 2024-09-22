@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  API: 'https://py-ia-david.up.railway.app',
+  API: 'https://p20241053.up.railway.app/api',
   environmentName: 'Dev-Local',
 
 };

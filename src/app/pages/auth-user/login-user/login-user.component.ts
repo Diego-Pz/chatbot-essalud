@@ -3,6 +3,8 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AppRoute } from 'src/app/data/constants/app-route.constant';
+import { RequestLoginUser } from 'src/app/data/models/auth-user.model';
+import { AuthUserService } from 'src/app/data/service/auth-user.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 
 @Component({
@@ -26,6 +28,7 @@ export class LoginUserComponent {
 
   constructor(private router: Router,
               private _formBuilder: FormBuilder,
+              private authService         : AuthUserService,
               private notificationService : NotificationService){
 
   }
@@ -35,9 +38,30 @@ export class LoginUserComponent {
   }
 
   checkLogin(){
-    localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
-    this.notificationService.success('Se autentificó el usuario');
-    this.router.navigate(['/']);
+    if (this.formLogin.valid) {
+      this.authService.loginUser(this.getPayload()).subscribe({
+        next: (data)=>{
+          localStorage.setItem('usrChatbotSeguroToken', JSON.stringify(data.access));
+          localStorage.setItem('usrChatbotSeguroRefreshToken', JSON.stringify(data.refresh));
+          localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
+          this.notificationService.success('Se autentificó el usuario');
+          this.router.navigate(['/']);
+        },
+        error: (error)=>{
+          this.notificationService.warning(error.error.error);
+        }
+      })
+    }
+    else{
+      this.formLogin.markAllAsTouched()
+    }
+  }
+
+  getPayload(): RequestLoginUser{
+    return {
+      identification: this.formLogin.controls.ctrlUser.value!,
+      password: this.formLogin.controls.ctrlPass.value!
+    }
   }
 
   goToRegister(){
