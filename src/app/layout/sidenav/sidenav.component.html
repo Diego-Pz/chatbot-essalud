@@ -1,5 +1,5 @@
-<div class="w-full relative h-full flex flex-col gap-2.5 p-2.5 bg-[#F7F2FA] botonApariencia !rounded-none" [ngClass]="userData ? null : 'justify-between'">
-    <div class="py-[7px] flex flex-row shrink-0">
+<div class="w-full relative h-full flex flex-col gap-2.5 p-2.5 botonApariencia !rounded-none" [ngClass]="[userData ? '' : 'justify-between', funcionesCompartidasService.ctrlModoOscuro.value ? 'bg-[#373739]' : 'bg-[#F7F2FA]']">
+    <div class="py-[7px] flex flex-row shrink-0" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
         <div class="p-2 rounded-2xl hover:botonApariencia hover:cursor-pointer hover:bg-gray-200 select-none" (click)="onToggleSidenav()">
             <div class="px-[3px] py-1.5">
                 <img src="assets/svg/icon-sidenav-three-bars.svg" alt=""/>
@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="py-2.5 px-1 flex flex-col justify-between grow" *ngIf="userData">
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
             <div class="flex flex-row items-center justify-between">
                 <span class="font-bold text-[#1D1B20]">Archivos recientes</span>
                 <app-icon icon="faAdd" class="w-[18.94px]"></app-icon>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="flex flex-col gap-3 pb-4">
-            <span class="font-bold text-[#1D1B20]">Tipos de seguros</span>
+            <span class="font-bold text-[#1D1B20]" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">Tipos de seguros</span>
             <ul class="flex flex-col gap-2.5">
                 <li>
                     <input type="checkbox" id="tipo-seguro-1" value="" class="hidden peer" required="">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="flex flex-col gap-1 py-2.5 px-2 text-[#79747E] font-bold">
-        <div class="flex flex-col">
+        <div class="flex flex-col" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
             <div class="flex flex-row justify-end">
                 <div #execMenuAyuda [cdkMenuTriggerFor]="optionsAyuda"></div>
             </div>
@@ -71,13 +71,13 @@
                 <span>Ayuda</span>
             </div>
         </div>
-        <div class="flex flex-row gap-[18px] px-1 py-2 rounded cursor-pointer hover:bg-gray-200">
+        <div class="flex flex-row gap-[18px] px-1 py-2 rounded cursor-pointer hover:bg-gray-200" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
             <div class="w-4 flex items-center justify-center">
                 <img src="assets/svg/icon-sidenav-star.svg" alt=""/>
             </div>
             <span>Calificar</span>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
             <div class="flex flex-row justify-end">
                 <div #execMenuConfig [cdkMenuTriggerFor]="optionsConfigurations"></div>
             </div>

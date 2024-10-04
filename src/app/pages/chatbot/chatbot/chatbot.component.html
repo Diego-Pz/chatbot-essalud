@@ -1,9 +1,9 @@
 <div class="flex flex-col h-full">
     <div class="containerCentroChatbot flex flex-col items-center gap-2.5" [ngClass]="listRespuestas.length > 0 ? 'justify-between' : 'justify-center'">
-        <div class="flex items-center text-[#49454F]" [ngClass]="listRespuestas.length > 0 ? 'flex-row gap-5' : 'flex-col gap-[44px]'">
+        <div class="flex items-center text-[var(--color-a-degrade)]" [ngClass]="[listRespuestas.length > 0 ? 'flex-row gap-5' : 'flex-col gap-[44px]']">
             <span class="text-center" [ngClass]="listRespuestas.length > 0 ? 'text-font-variado' : 'text-[57px] leading-[57px]'">¿Cómo puedo ayudarte?</span>
             <div class="flex flex-row gap-3 justify-center" [ngClass]="listRespuestas.length > 0 ? 'text-font-subvariado' : 'text-[22px] leading-[28px]'">
-                <div class="!rounded-xl bg-[#E6E0E9] p-4 max-w-[254px] relative botonApariencia cursor-pointer hover:bg-[#B4AFB7]" [ngClass]="listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]'">
+                <div class="!rounded-xl p-4 max-w-[254px] relative botonBorde cursor-pointer" [ngClass]="[listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]', compartidoService.ctrlModoOscuro.value ? 'bg-[#342f36] hover:bg-[#404040]' : 'bg-[#E6E0E9] hover:bg-[#B4AFB7] text-[var(--color-black-alt)]']">
                     <span>¿Que tipo de seguro necesito?</span>
                     <div class="absolute" [ngClass]="listRespuestas.length > 0 ? 'right-2 inset-y-0 content-center' : 'bottom-4 right-4'">
                         <div class="rounded-full bg-white flex justify-center items-center w-10 h-10">
@@ -11,7 +11,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="!rounded-xl bg-[#E6E0E9] p-4 max-w-[254px] relative botonApariencia cursor-pointer hover:bg-[#B4AFB7]" [ngClass]="listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]'" (click)="openDialogPreguntasFrecuentes()">
+                <div class="!rounded-xl p-4 max-w-[254px] relative botonBorde cursor-pointer" [ngClass]="[listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]', compartidoService.ctrlModoOscuro.value ? 'bg-[#342f36] hover:bg-[#404040]' : 'bg-[#E6E0E9] hover:bg-[#B4AFB7] text-[var(--color-black-alt)]']" (click)="openDialogPreguntasFrecuentes()">
                     <span>Preguntas frecuentes</span>
                     <div class="absolute" [ngClass]="listRespuestas.length > 0 ? 'right-2 inset-y-0 content-center' : 'bottom-4 right-4'">
                         <div class="rounded-full bg-white flex justify-center items-center w-10 h-10">
@@ -23,7 +23,7 @@
         </div>
         <div class="flex flex-col gap-2.5 w-11/12 self-center overflow-auto hide-scrollbar" #chatContainer>
             <div class="flex flex-row" *ngFor="let interaccion of listRespuestas, index as i">
-                <div class="rounded-lg border border-gray-300 py-4 px-6 w-full" [ngClass]="interaccion.rol == 'system' ? 'text-start border-l-8 border-l-[var(--color-claro)]' : 'text-end border-r-8 border-r-[var(--color-base-claro)]'">
+                <div class="rounded-lg border py-4 px-6 w-full" [ngClass]="[interaccion.rol == 'system' ? 'text-start border-l-8 !border-l-[var(--color-claro)]' : 'text-end border-r-8 !border-r-[var(--color-base-claro)]', compartidoService.ctrlModoOscuro.value ? 'styleRespuestaDark' : 'styleRespuestaLight']">
                     <span *ngIf="interaccion.respuestaRealizada" class="whitespace-pre-line">{{interaccion.interaccion}}</span>
                     <div *ngIf="!interaccion.respuestaRealizada" class="loading">
                         <span class="dot"></span>

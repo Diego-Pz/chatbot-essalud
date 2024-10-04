@@ -4,6 +4,7 @@ import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RequestLoginUser, RequestRegisterUser } from '../models/auth-user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 const URL_BASE = `${environment.API}/user`;
 
@@ -12,12 +13,13 @@ const URL_BASE = `${environment.API}/user`;
 })
 export class AuthUserService {
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient, private router: Router) { }
 
   logout() {
     localStorage.removeItem('usrChatbotSeguroToken');
     localStorage.removeItem('usrChatbotSeguroRefreshToken');
     localStorage.removeItem('usrChatbotSeguro');
+    this.router.navigate(['/'])
   }
 
   registerUser(model: RequestRegisterUser){

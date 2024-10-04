@@ -9,13 +9,15 @@ import { CdkMenuModule } from '@angular/cdk/menu';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UpdateDataUserComponent } from './toolbar/update-data-user/update-data-user.component';
 
 
 @NgModule({
   declarations: [
     SidenavComponent,
     ToolbarComponent,
-    LayoutComponent
+    LayoutComponent,
+    UpdateDataUserComponent
   ],
   imports: [
     CommonModule,

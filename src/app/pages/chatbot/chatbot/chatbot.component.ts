@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/data/service/notification.service';
 import { DialogPreguntasFrecuentesComponent } from '../components/dialog-preguntas-frecuentes/dialog-preguntas-frecuentes.component';
 import { Dialog } from '@angular/cdk/dialog';
 import { AuthUserService } from 'src/app/data/service/auth-user.service';
+import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
 
 @Component({
   selector: 'app-chatbot',
@@ -25,6 +26,7 @@ export class ChatbotComponent {
               private notificationService                 : NotificationService,
               private authService                         : AuthUserService,
               private dialog                              : Dialog,
+              public compartidoService                    : CompartidoFuncionesService,
               private _formBuilder                        : FormBuilder
   ){
     
@@ -63,9 +65,15 @@ export class ChatbotComponent {
   }
 
   getPayloadPregunta(): RequestComunicacionChatbot{
-    return {
+    let payload: RequestComunicacionChatbot = {
       question: this.formPregunta.controls.ctrlPregunta.value!
     }
+
+    if (this.authService.isAuthenticated()) {
+      payload.identification = JSON.parse(localStorage.getItem('usrChatbotSeguro')!).identification;
+    }
+
+    return payload;
   }
 
   private scrollToBottom(): void {

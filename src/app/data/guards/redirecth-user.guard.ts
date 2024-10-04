@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateFn, Router } from '@angular/router';
+import { AuthUserService } from '../service/auth-user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class redirectUserGuard implements CanActivate {
 
-  constructor( private router: Router){
+  constructor( private router: Router, private authServicio: AuthUserService){
 
   }
 
   canActivate(){
-    //const token = this.tokenService.getToken()
-    //const isValidToken = this.tokenService.isValidToken()
-    let validacion = localStorage.getItem('usrChatbotSeguro') == null || localStorage.getItem('usrChatbotSeguro') == 'undefined';
-    if (!validacion) {
+    let result = false;
+    if (this.authServicio.isAuthenticated()) {
       this.router.navigate(['/'])
-      return false;
+    } else {
+      result = true;
     }
-    else{
-      return true;
-    }
-    // const isValidToken = this.tokenService.isValidRefreshToken()
-    // if (isValidToken)
-    // {
-    //   this.router.navigate(['/app'])
-    // }
-    // return true;
+    return result;
   }
 }

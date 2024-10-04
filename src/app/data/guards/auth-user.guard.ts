@@ -1,31 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { AuthUserService } from '../service/auth-user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class authUsernGuard implements CanActivate {
 
-  constructor( private router: Router){
+  constructor( private router: Router, private authServicio: AuthUserService){
 
   }
 
   canActivate(){
-    //const token = this.tokenService.getToken()
-    //const isValidToken = this.tokenService.isValidToken()
-    if (localStorage.getItem('usrChatbotSeguro') == null || localStorage.getItem('usrChatbotSeguro') == 'undefined') {
-      this.router.navigate(['/auth'])
-      return false;
+    let result = false;
+    if (this.authServicio.isAuthenticated()) {
+      result = true;
+    } else {
+      this.authServicio.logout();
     }
-    else{
-      return true;
-    }
-    // const isValidToken = this.tokenService.isValidRefreshToken()
-    // if (!isValidToken)
-    // {
-    //   this.router.navigate(['/login'])
-    //   return false
-    // }
-    // return true;
+    return result;
   }
 }

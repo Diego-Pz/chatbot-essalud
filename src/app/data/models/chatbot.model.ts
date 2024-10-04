@@ -1,5 +1,6 @@
 export interface RequestComunicacionChatbot{
     question: string;
+    identification?: string;
 }
 
 export interface StructureInteraccionChatbot{

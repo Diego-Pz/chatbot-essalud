@@ -1,0 +1,26 @@
+<div class="rounded-lg border-2 relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
+    <div class="flex flex-col items-center gap-8 py-6 px-4">
+        <span class="text-2xl font-semibold">{{ctrlSelectPag.value ? tempSelectPag.nomTitulo : 'Actualizar Datos'}}</span>
+        <div class="flex flex-col items-center gap-8 w-full" *ngIf="!ctrlSelectPag.value">
+            <app-btn *ngFor="let buttons of listOpciones, index as i" class="w-3/5" [color]="'base'" (click)="ctrlSelectPag.setValue(buttons)"><div class="!text-lg">{{buttons.nombreBtn}}</div></app-btn>
+        </div>
+        <div class="flex flex-col gap-1" *ngIf="ctrlSelectPag.value == listOpciones[0]">
+          <div class="relative">
+            <select [formControl]="ctrlTipoSeguro"
+              class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border text-[var(--color-black-alt)]">
+              <option [value]="null" disabled selected>Seleccionar tipo</option>
+              <option [value]='1'>Seguro Potestativo</option>
+              <option [value]='2'>Seguro de Trabajos de Riesgo</option>
+              <option [value]='1'>Seguro Agrario</option>
+              <option [value]='2'>Seguro contra Accidentes EsSalud</option>
+            </select>
+          </div>
+          <div *ngIf="ctrlTipoSeguro.touched && ctrlTipoSeguro.invalid">
+              <span *ngIf="ctrlTipoSeguro.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Selección requerida
+              </span>
+          </div>
+        </div>
+        <app-btn class="!text-base w-3/5" *ngIf="ctrlSelectPag.value" [color]="'base'" (click)="updateValues()" [loading]="wait">Aceptar</app-btn>
+    </div>
+</div>

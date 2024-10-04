@@ -39,16 +39,19 @@ export class LoginUserComponent {
 
   checkLogin(){
     if (this.formLogin.valid) {
+      this.wait = true;
       this.authService.loginUser(this.getPayload()).subscribe({
         next: (data)=>{
           localStorage.setItem('usrChatbotSeguroToken', JSON.stringify(data.access));
           localStorage.setItem('usrChatbotSeguroRefreshToken', JSON.stringify(data.refresh));
-          localStorage.setItem('usrChatbotSeguro', JSON.stringify({nombre: 'JUAN AZCARATE'}));
+          localStorage.setItem('usrChatbotSeguro', JSON.stringify(data));
           this.notificationService.success('Se autentificó el usuario');
           this.router.navigate(['/']);
+          this.wait = false;
         },
         error: (error)=>{
           this.notificationService.warning(error.error.error);
+          this.wait = false;
         }
       })
     }

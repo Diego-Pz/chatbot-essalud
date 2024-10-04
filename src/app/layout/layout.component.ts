@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CompartidoFuncionesService } from '../data/service/compartido-funciones.service';
 
 @Component({
   selector: 'app-layout',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
 export class LayoutComponent {
   opened = true;
 
-
+  constructor(public compartidoService: CompartidoFuncionesService,){}
 }
