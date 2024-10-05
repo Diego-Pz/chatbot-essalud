@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 })
 export class CompartidoFuncionesService {
 
-  ctrlModoOscuro = new FormControl(true);
+  ctrlModoOscuro = new FormControl(false);
   ctrlNotificaciones = new FormControl(false);
 
   constructor() { }

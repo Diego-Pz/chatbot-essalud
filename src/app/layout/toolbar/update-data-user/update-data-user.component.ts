@@ -18,6 +18,7 @@ export class UpdateDataUserComponent {
 
   ctrlTipoSeguro = new FormControl(null, [Validators.required]);
   ctrlEmail = new FormControl('', [Validators.email, Validators.required]);
+  ctrlEmailConfirmacion = new FormControl('')
   
   showPass = [false, false, false];
   formChangePass = this._formBuilder.group({
@@ -60,15 +61,15 @@ export class UpdateDataUserComponent {
           pasoValidacion = true;
         }
         else{
-          this.ctrlTipoSeguro.markAllAsTouched();
+          this.formChangePass.markAllAsTouched();
         }
         break;
       case this.listOpciones[2]:
-        if (this.ctrlEmail.valid){
+        if (this.ctrlEmail.valid && (this.ctrlEmail.value == this.ctrlEmailConfirmacion.value)){
           pasoValidacion = true;
         }
         else{
-          this.ctrlTipoSeguro.markAllAsTouched();
+          this.ctrlEmail.markAllAsTouched();
         }
         break;
     }

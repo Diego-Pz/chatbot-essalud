@@ -1,5 +1,6 @@
 <div class="rounded-lg border-2 relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
     <div class="flex flex-col items-center gap-8 py-6 px-4">
+        <app-icon class="absolute cursor-pointer left-4 text-2xl" icon="faCircleArrowLeft" *ngIf="ctrlSelectPag.value" (click)="ctrlSelectPag.reset()"></app-icon>
         <span class="text-2xl font-semibold">{{ctrlSelectPag.value ? tempSelectPag.nomTitulo : 'Actualizar Datos'}}</span>
         <div class="flex flex-col items-center gap-8 w-full" *ngIf="!ctrlSelectPag.value">
             <app-btn *ngFor="let buttons of listOpciones, index as i" class="w-3/5" [color]="'base'" (click)="ctrlSelectPag.setValue(buttons)"><div class="!text-lg">{{buttons.nombreBtn}}</div></app-btn>
@@ -7,18 +8,81 @@
         <div class="flex flex-col gap-1" *ngIf="ctrlSelectPag.value == listOpciones[0]">
           <div class="relative">
             <select [formControl]="ctrlTipoSeguro"
-              class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border text-[var(--color-black-alt)]">
+              class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'">
               <option [value]="null" disabled selected>Seleccionar tipo</option>
               <option [value]='1'>Seguro Potestativo</option>
               <option [value]='2'>Seguro de Trabajos de Riesgo</option>
-              <option [value]='1'>Seguro Agrario</option>
-              <option [value]='2'>Seguro contra Accidentes EsSalud</option>
+              <option [value]='3'>Seguro Agrario</option>
+              <option [value]='4'>Seguro contra Accidentes EsSalud</option>
             </select>
           </div>
           <div *ngIf="ctrlTipoSeguro.touched && ctrlTipoSeguro.invalid">
               <span *ngIf="ctrlTipoSeguro.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                 Selección requerida
               </span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 items-center w-full" [formGroup]="formChangePass" *ngIf="ctrlSelectPag.value == listOpciones[1]">
+          <div class="flex flex-col gap-1 min-w-64 w-3/5">
+            <div class="relative">
+              <input #nameInput placeholder="Actual Contraseña *" formControlName="ctrlActualPsss" [type]="showPass[0] ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+              <div class="absolute inset-y-0 right-2 content-center cursor-pointer" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'" (click)="showPass[0] = !showPass[0]">
+                <app-icon class="p-1" [icon]="showPass[0] ? 'faEyeSlash' : 'faEye'"></app-icon>
+              </div>
+            </div>
+            <div *ngIf="formChangePass.controls.ctrlActualPsss.touched && formChangePass.controls.ctrlActualPsss.invalid">
+                <span *ngIf="formChangePass.controls.ctrlActualPsss.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Contraseña Actual requerida
+                </span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1 min-w-64 w-3/5">
+            <div class="relative">
+              <input #nameInput placeholder="Nueva Contraseña *" formControlName="ctrlNewPass" [type]="showPass[1] ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+              <div class="absolute inset-y-0 right-2 content-center cursor-pointer" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'" (click)="showPass[1] = !showPass[1]">
+                <app-icon class="p-1" [icon]="showPass[1] ? 'faEyeSlash' : 'faEye'"></app-icon>
+              </div>
+            </div>
+            <div *ngIf="formChangePass.controls.ctrlNewPass.touched && formChangePass.controls.ctrlNewPass.invalid">
+                <span *ngIf="formChangePass.controls.ctrlNewPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Contraseña Nueva requerida
+                </span>
+            </div>
+            <span *ngIf="formChangePass.controls.ctrlNewPass.touched && formChangePass.controls.ctrlNewPass.value != formChangePass.controls.ctrlConfirmNewPass.value" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Las contraseñas no coinciden
+            </span>
+          </div>
+          <div class="flex flex-col gap-1 min-w-64 w-3/5">
+            <div class="relative">
+              <input #nameInput placeholder="Confirmar Contraseña *" formControlName="ctrlConfirmNewPass" [type]="showPass[2] ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+              <div class="absolute inset-y-0 right-2 content-center cursor-pointer" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'" (click)="showPass[2] = !showPass[2]">
+                <app-icon class="p-1" [icon]="showPass[2] ? 'faEyeSlash' : 'faEye'"></app-icon>
+              </div>
+            </div>
+            <div *ngIf="formChangePass.controls.ctrlConfirmNewPass.touched && formChangePass.controls.ctrlConfirmNewPass.invalid">
+                <span *ngIf="formChangePass.controls.ctrlConfirmNewPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Confirmación contraseña requerida
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4 items-center w-full" *ngIf="ctrlSelectPag.value == listOpciones[2]">
+          <div class="flex flex-col gap-1 min-w-64 w-4/5">
+            <input #nameInput placeholder="Nuevo correo electrónico *" [formControl]="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+            <div *ngIf="ctrlEmail.touched && ctrlEmail.invalid">
+                <span *ngIf="ctrlEmail.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Correo requerido
+                </span>
+                <span *ngIf="ctrlEmail.hasError('email')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Formato de correo no valido
+                </span>
+            </div>
+            <span *ngIf="ctrlEmail.touched && ctrlEmail.value != ctrlEmailConfirmacion.value" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                Los correos no coinciden
+            </span>
+          </div>
+          <div class="flex flex-col gap-1 min-w-64 w-4/5">
+            <input #nameInput placeholder="Confirmar nuevo correo electrónico *" [formControl]="ctrlEmailConfirmacion" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
           </div>
         </div>
         <app-btn class="!text-base w-3/5" *ngIf="ctrlSelectPag.value" [color]="'base'" (click)="updateValues()" [loading]="wait">Aceptar</app-btn>

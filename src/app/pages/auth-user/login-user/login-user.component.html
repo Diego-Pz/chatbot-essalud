@@ -32,12 +32,9 @@
         </div>
       </div>
       <div class="flex-1 flex justify-center items-center" *ngIf="!isMovil">
-        <div class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5 min-[769px]:w-4/5 max-w-[500px]" [formGroup]="formLogin">
+        <form class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5 min-[769px]:w-4/5 max-w-[500px]" [formGroup]="formLogin" (ngSubmit)="checkLogin()">
           <div class="flex flex-col gap-4 px-[39.5px] items-center mb-4 min-[769px]:mb-10">
-            <div class="w-full" *ngIf="preLoginConfirmed">
-              <img class="w-10 cursor-pointer" src="assets/svg/icon-login-arrow-left.svg" alt="" (click)="anulatePreLogin()">
-            </div>
-            <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">{{ preLoginConfirmed ? 'Seleccionar Centro' : 'Iniciar Sesión'}}</span>
+            <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">Iniciar Sesión</span>
             <mat-divider class="w-full"></mat-divider>
             <span class="max-[934px]:text-[16px] text-[28px] leading-[28px] font-medium text-[var(--color-base-claro)] text-center" *ngIf="!preLoginConfirmed">¡Bienvenido!</span>
           </div>
@@ -69,11 +66,11 @@
               </div>
             </div>
             <div class="flex flex-col gap-3 items-center">
-              <app-btn class="!text-base w-3/5" [color]="'base'" (click)="checkLogin()" [loading]="wait">INICIAR SESIÓN</app-btn>
+              <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit" [loading]="wait">INICIAR SESIÓN</app-btn>
               <app-btn class="w-3/5" color="bordeado" (click)="goToRegister()">REGISTRARSE</app-btn>
               <a [routerLink]="['/' + routesLink.AUTH + '/' + routesLink.CHANGE_PASSWORD]">¿Olvidaste tu contraseña?</a>
             </div>
           </div>
-        </div>
+        </form>
       </div>
 </div>
