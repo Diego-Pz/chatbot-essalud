@@ -1,0 +1,38 @@
+<div class="rounded-lg border-2 relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
+    <div class="flex flex-col items-center gap-8 py-6 px-4">
+        <app-icon class="absolute cursor-pointer left-4 text-2xl" icon="faCircleArrowLeft" *ngIf="ctrlSelectPag.value && !dataEnviada" (click)="ctrlSelectPag.reset()"></app-icon>
+        <span class="text-2xl font-semibold" *ngIf="!dataEnviada">{{ctrlSelectPag.value ? tempSelectPag.nomTitulo : '¿Cómo nos comunicamos contigo?'}}</span>
+        <div class="flex flex-col items-center gap-8 w-full" *ngIf="!ctrlSelectPag.value">
+            <app-btn *ngFor="let buttons of listOpciones, index as i" class="w-3/5" [color]="'base'" (click)="ctrlSelectPag.setValue(buttons)"><div class="!text-lg">{{buttons.nombreBtn}}</div></app-btn>
+        </div>
+        <div class="flex flex-col gap-1 w-full items-center" *ngIf="ctrlSelectPag.value == listOpciones[0]">
+            <div class="flex flex-col gap-1 min-w-64 w-4/5" *ngIf="!dataEnviada">
+                <input #nameInput placeholder="Preguntar..." [formControl]="ctrlPregunta" type="text" class="w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+                <div *ngIf="ctrlPregunta.touched && ctrlPregunta.invalid">
+                    <span *ngIf="ctrlPregunta.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Pregunta requerida
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-4 min-w-64 w-4/5 text-center py-10" *ngIf="dataEnviada">
+                <span class="text-2xl font-semibold">Se registró la siguiente pregunta:</span>
+                <span class="text-lg text-[var(--color-black-alt)] font-semibold">"{{ctrlPregunta.value}}"</span>
+                <span class="text-2xl font-semibold">Se le notificará la respuesta en su bandeja de notificaciones</span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-4 items-center w-full" *ngIf="ctrlSelectPag.value == listOpciones[1]">
+            <div class="flex flex-col gap-1 min-w-64 w-2/5" *ngIf="!dataEnviada">
+                <input #nameInput placeholder="Escribe el número de teléfono" [formControl]="ctrlTelefono" type="number" class="hide-scrollbar w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'"/>
+                <div *ngIf="ctrlTelefono.touched && ctrlTelefono.invalid">
+                    <span *ngIf="ctrlTelefono.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Número de teléfono requerido
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 min-w-64 w-4/5 text-center py-10" *ngIf="dataEnviada">
+                <span class="text-2xl font-semibold">En breves momentos un asesor se estará contactando contigo.</span>
+            </div>
+        </div>
+        <app-btn class="!text-base w-3/5" *ngIf="ctrlSelectPag.value" [color]="'base'" (click)="checkValid()" [loading]="waitDataSend">Aceptar</app-btn>
+    </div>
+</div>

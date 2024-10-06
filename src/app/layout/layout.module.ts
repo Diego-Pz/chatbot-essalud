@@ -10,6 +10,9 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateDataUserComponent } from './toolbar/update-data-user/update-data-user.component';
+import { AddContratoUserComponent } from './sidenav/add-contrato-user/add-contrato-user.component';
+import { ContactWithAdministratorComponent } from './sidenav/contact-with-administrator/contact-with-administrator.component';
+import { DialogValoracionComponent } from './sidenav/dialog-valoracion/dialog-valoracion.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { UpdateDataUserComponent } from './toolbar/update-data-user/update-data-
     SidenavComponent,
     ToolbarComponent,
     LayoutComponent,
-    UpdateDataUserComponent
+    UpdateDataUserComponent,
+    AddContratoUserComponent,
+    ContactWithAdministratorComponent,
+    DialogValoracionComponent
   ],
   imports: [
     CommonModule,
