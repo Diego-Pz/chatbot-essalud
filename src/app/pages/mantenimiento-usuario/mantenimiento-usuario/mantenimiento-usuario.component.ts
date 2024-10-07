@@ -67,8 +67,10 @@ export class MantenimientoUsuarioComponent {
       this.waitList[1] = true;
       this.userService.editInfoUser(this.getPayloadUpdate()).subscribe({
         next: (data)=>{
-          this.notificationService.success('Cambio registrado en usuario')
-          this.waitList[1] = false;          
+          this.notificationService.success('Cambio registrado en usuario');
+          this.formUpdateUser.reset();
+          this.waitList[1] = false;
+          this.waitList[2] = false;
         },
         error: (error)=>{
           this.waitList[1] = false;
