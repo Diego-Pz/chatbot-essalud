@@ -4,7 +4,7 @@
         <div class="flex flex-col gap-1">
           <div class="relative">
             <select [formControl]="ctrlTipoSeguro"
-              class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-400' : 'text-[var(--color-black-alt)]'">
+              class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'">
               <option [value]="null" disabled selected>Seleccionar tipo</option>
               <option [value]='1'>Seguro Potestativo</option>
               <option [value]='2'>Seguro de Trabajos de Riesgo</option>

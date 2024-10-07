@@ -5,6 +5,10 @@ export interface RequestEditInfoUser{
     password?: string
 }
 
+export interface RequestFindUser{
+    identification: string,
+}
+
 export interface RequestRecoverPassPart1{
     email: string,
 }

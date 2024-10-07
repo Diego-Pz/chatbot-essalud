@@ -11,14 +11,12 @@ export class authManagementGuard implements CanActivate {
   }
 
   canActivate(){
-    //const token = this.tokenService.getToken()
-    //const isValidToken = this.tokenService.isValidToken()
-    if (localStorage.getItem('usrChatbotSeguroManagement') == null || localStorage.getItem('usrChatbotSeguroManagement') == 'undefined') {
-      this.router.navigate(['/management/login'])
-      return false;
+    if (JSON.parse(localStorage.getItem('usrChatbotSeguro')!).role === 'ROLE_ADMIN') {
+      return true;
     }
     else{
-      return true;
+      this.router.navigate(['/'])
+      return false;
     }
     // const isValidToken = this.tokenService.isValidRefreshToken()
     // if (!isValidToken)

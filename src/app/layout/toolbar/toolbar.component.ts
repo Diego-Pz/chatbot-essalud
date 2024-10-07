@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoute } from 'src/app/data/constants/app-route.constant';
 import { AuthUserService } from 'src/app/data/service/auth-user.service';
@@ -14,6 +14,7 @@ import { CompartidoFuncionesService } from 'src/app/data/service/compartido-func
 export class ToolbarComponent {
 
   userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
+  @Output() toggleSidenav = new EventEmitter();
 
   constructor(private router: Router,
               private dialog: Dialog,
@@ -28,7 +29,10 @@ export class ToolbarComponent {
     window.location.reload();
   }
 
-
+  onToggleSidenav(): void {
+    this.toggleSidenav.emit();
+  }
+  
   returnToLogin(){
     this.router.navigate(['/' + AppRoute.AUTH]);
   }

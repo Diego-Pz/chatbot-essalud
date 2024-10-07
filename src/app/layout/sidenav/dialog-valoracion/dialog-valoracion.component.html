@@ -1,1 +1,24 @@
-<p>dialog-valoracion works!</p>
+<div class="rounded-lg border-2 relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
+    <div class="flex flex-col items-center gap-8 py-6 px-4">
+        <span class="text-2xl font-semibold">¡Califícanos!</span>
+        <div class="flex flex-col gap-1">
+            <div class="flex flex-row gap-5 text-3xl">
+                <app-icon class="cursor-pointer hover:text-yellow-200" *ngFor="let star of opcionesEstrella, index as i" icon="faStar" [ngClass]="star ? 'text-yellow-400' : 'text-gray-400'" (click)="ctrlStars.setValue(i + 1)"></app-icon>
+            </div>
+            <div *ngIf="ctrlStars.touched && ctrlStars.invalid">
+                <span *ngIf="ctrlStars.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Puntuación requerida
+                </span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-1 w-3/4">
+            <textarea placeholder="Escribe un comentario..." rows="5" [formControl]="ctrlDescripcion" class="w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"></textarea>
+            <div *ngIf="ctrlDescripcion.touched && ctrlDescripcion.invalid">
+                <span *ngIf="ctrlDescripcion.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Descripción requerida
+                </span>
+            </div>
+        </div>
+        <app-btn class="!text-base w-3/5" [color]="'base'" (click)="checkValid()" [loading]="waitDataSend">Calificar</app-btn>
+    </div>
+</div>

@@ -12,16 +12,35 @@ import { DialogValoracionComponent } from './dialog-valoracion/dialog-valoracion
 })
 export class SidenavComponent {
 
-  @Output() toggleSidenav = new EventEmitter();
+  listOpcionesFiltro: any[] = [
+    {value: 1, tipo: 'Regular'},
+    {value: 2, tipo: 'Potestativo'},
+    {value: 3, tipo: 'Trabajo de Riesgo'},
+    {value: 4, tipo: 'Agrario'},
+    {value: 5, tipo: 'Contra Accidentes'},
+  ];
+
+  optAdministrator: any[] = [
+    {nomVista: 'Mantenimiento de usuarios', rutaVista: '/administracion-usuario'},
+    {nomVista: 'Preguntas frecuentes', rutaVista: '/administracion-preguntas'},
+    {nomVista: 'Bandeja de preguntas', rutaVista: '/administracion-bandeja'},
+    {nomVista: 'Análisis de interacciones', rutaVista: '/administracion-metricas'},
+  ]
+
+  adminLogged: boolean = false;
   userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
 
   constructor(public funcionesCompartidasService : CompartidoFuncionesService,
               private dialog: Dialog,){
 
   }
-  
-  onToggleSidenav(): void {
-    this.toggleSidenav.emit();
+
+  ngOnInit(){
+    if (this.userData) {
+      if (this.userData.role !== "ROLE_USER") {
+        this.adminLogged = true;
+      }
+    }
   }
 
   openDialogAddArchivos(){

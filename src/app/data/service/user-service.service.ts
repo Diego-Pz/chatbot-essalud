@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RequestEditInfoUser, RequestRecoverPassPart1, RequestRecoverPassPart2 } from '../models/user.model';
+import { RequestEditInfoUser, RequestFindUser, RequestRecoverPassPart1, RequestRecoverPassPart2 } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 
@@ -15,6 +15,11 @@ export class UserServiceService {
 
   editInfoUser(model: RequestEditInfoUser){
     const url = `${URL_BASE}/update`;
+    return this._httpClient.post<any>(url, model);
+  }
+
+  getUserInfo(model: RequestFindUser){
+    const url = `${URL_BASE}/find`;
     return this._httpClient.post<any>(url, model);
   }
 

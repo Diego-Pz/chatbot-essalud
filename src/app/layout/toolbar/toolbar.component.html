@@ -1,11 +1,14 @@
 <div class="toolbarStyle" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212]' : 'bg-white'">
+    <div class="w-9 flex text-xl justify-center p-1 rounded-2xl hover:cursor-pointer select-none" (click)="onToggleSidenav()" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 hover:bg-[#39393a]' : 'hover:bg-gray-200 text-[var(--color-black-alt)]'">
+        <app-icon icon="faBars"></app-icon>
+    </div>
     <div class="flex flex-row gap-1.5 items-center">
         <div class="w-[48px] h-[48px] flex justify-center items-center" *ngIf="userData" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'invert' : ''">
             <img src="assets/svg/icon-bell.svg" alt=""/>
         </div>
-        <div class="py-[14px] px-4 bg-[#F7F7F9] border-[#C5C5C5] border-solid border rounded-2xl select-none flex flex-row gap-5" *ngIf="userData" [cdkMenuTriggerFor]="optionsAccount">
+        <div class="py-[14px] px-4 bg-[#F7F7F9] border-[#C5C5C5] border-solid border rounded-2xl select-none flex flex-row gap-5" *ngIf="userData" [cdkMenuTriggerFor]="optionsAccount" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'">
             <span>Usuario registrado</span>
-            <img src="assets/svg/icon-down.svg" alt=""/>
+            <img src="assets/svg/icon-down.svg" alt="" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'invert' : ''"/>
             <ng-template #optionsAccount>
                 <div class="botonBorde bg-[#F7F7F9] border-[#C5C5C5] border-solid text-[var(--color-black-alt)] text-[16px]" cdkMenu>
                     <div class="flex flex-col" cdkMenuGroup>
