@@ -11,13 +11,17 @@ import { UserServiceService } from 'src/app/data/service/user-service.service';
   styleUrls: ['./mantenimiento-usuario.component.scss']
 })
 export class MantenimientoUsuarioComponent {
-  waitList: boolean[] = [false, false];
-  ctrlPreSearch = new FormControl('72437355', [Validators.required]);
+  waitList: boolean[] = [false, false, false];
+
+  showPass = false;
+  formPreSearch = this._formBuilder.group({
+    ctrlPreSearch: ['', Validators.required]
+  })
   formUpdateUser = this._formBuilder.group({
     ctrlTypeDoc: ['', Validators.required],
     ctrlDoc: ['', Validators.required],
     ctrlTypeSec: ['', Validators.required],
-    ctrlCorreo: ['', Validators.required],
+    ctrlCorreo: ['', [Validators.required, Validators.email]],
     ctrlPass: [''],
   });
 
@@ -29,11 +33,11 @@ export class MantenimientoUsuarioComponent {
   }
 
   ngOnInit(){
-    this.findUser()
+    
   }
 
   findUser(){
-    if (this.ctrlPreSearch.valid) {
+    if (this.formPreSearch.valid) {
       this.waitList[0] = true;
       this.userService.getUserInfo(this.getPayloadPreSearch()).subscribe({
         next: (data)=>{
@@ -42,16 +46,19 @@ export class MantenimientoUsuarioComponent {
           this.formUpdateUser.controls.ctrlTypeSec.setValue(data.insurance_type);
           this.formUpdateUser.controls.ctrlCorreo.setValue(data.email);
           
-          this.waitList[0] = false;          
+          this.waitList[0] = false;
+          this.waitList[2] = true;
+          this.formPreSearch.reset();
+          this.notificationService.success('Usuario encontrado')
         },
         error: (error)=>{
           this.waitList[0] = false;
-          this.notificationService.warning(error.error.error);
+          this.notificationService.warning(error.error.detail);
         }        
       })
     }
     else{
-      this.ctrlPreSearch.markAllAsTouched();
+      this.formPreSearch.markAllAsTouched();
     }
   }
 
@@ -76,7 +83,7 @@ export class MantenimientoUsuarioComponent {
 
   getPayloadPreSearch(): RequestFindUser{
     return {
-      identification: this.ctrlPreSearch.value!
+      identification: this.formPreSearch.controls.ctrlPreSearch.value!
     }
   }
 

@@ -1,0 +1,48 @@
+.list-item-activo, .list-item-activo-dark{
+    
+}
+
+:hover.list-item-activo{
+
+}
+
+:hover.list-item-activo-dark{
+
+}
+
+.list-item-activo{
+    background-color: #7bbeff;
+}
+
+.list-item-activo-dark{
+    background-color: #2e6a8e;
+}
+
+:hover.list-item-admin{
+    background-color: #7bbeff;
+}
+
+:hover.list-item-admin-dark{
+    background-color: #2e6a8e;
+}
+
+.list-item-admin, .list-item-admin-dark{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    border: 2px solid;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+
+}
+
+.list-item-admin{
+    border-color: #393939;
+    color: var(--color-black-alt);
+}
+
+.list-item-admin-dark{
+    border-color: var(--color-a-degrade);
+    color: var(--color-fondo-claro);
+}

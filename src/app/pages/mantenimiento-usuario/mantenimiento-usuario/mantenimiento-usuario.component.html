@@ -1,1 +1,90 @@
-<p>mantenimiento-usuario works!</p>
+<div class="flex justify-center items-center h-full">
+    <div class="border-2 rounded-xl py-8 px-10 flex flex-col text-[var(--color-a-degrade)] gap-6 items-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
+        <span class="text-2xl font-semibold text-center">Mantenimiento de Usuarios</span>
+        <form class="flex flex-col gap-6 items-center" *ngIf="!waitList[2]" [formGroup]="formPreSearch" (ngSubmit)="findUser()">
+            <div class="flex flex-col gap-1 min-w-64 w-[20vw]">
+              <input placeholder="Documento de Identidad" formControlName="ctrlPreSearch" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+              <div *ngIf="formPreSearch.controls.ctrlPreSearch.touched && formPreSearch.controls.ctrlPreSearch.invalid">
+                  <span *ngIf="formPreSearch.controls.ctrlPreSearch.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                      Ingrese un número de documento
+                  </span>
+              </div>
+            </div>
+            <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit" [loading]="waitList[0]">Buscar</app-btn>
+        </form>
+        <form class="flex flex-col gap-6 items-center" *ngIf="waitList[2]" [formGroup]="formUpdateUser" (ngSubmit)="updateDataUser()">
+            <div class="flex flex-row gap-6 w-full">
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                  <div class="relative">
+                    <select formControlName="ctrlTypeDoc"
+                      class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'">
+                      <option [value]="null" disabled selected>Seleccionar tipo</option>
+                      <option [value]='1'>DNI</option>
+                      <option [value]='2'>Carnet de Extranjería</option>
+                    </select>
+                  </div>
+                  <div *ngIf="formUpdateUser.controls.ctrlTypeDoc.touched && formUpdateUser.controls.ctrlTypeDoc.invalid">
+                      <span *ngIf="formUpdateUser.controls.ctrlTypeDoc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Selección requerida
+                      </span>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                  <input placeholder="Documento de Identidad" formControlName="ctrlDoc" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                  <div *ngIf="formUpdateUser.controls.ctrlDoc.touched && formUpdateUser.controls.ctrlDoc.invalid">
+                      <span *ngIf="formUpdateUser.controls.ctrlDoc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                          N° de documento requerido
+                      </span>
+                  </div>
+                </div>
+            </div>
+            <div class="flex flex-row gap-6 w-full">
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                  <div class="relative">
+                    <select formControlName="ctrlTypeSec"
+                      class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'">
+                      <option [value]="null" disabled selected>Seleccionar tipo</option>
+                      <option [value]='1'>Seguro Potestativo</option>
+                      <option [value]='2'>Seguro de Trabajos de Riesgo</option>
+                      <option [value]='3'>Seguro Agrario</option>
+                      <option [value]='4'>Seguro contra Accidentes EsSalud</option>
+                    </select>
+                  </div>
+                  <div *ngIf="formUpdateUser.controls.ctrlTypeSec.touched && formUpdateUser.controls.ctrlTypeSec.invalid">
+                      <span *ngIf="formUpdateUser.controls.ctrlTypeSec.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Selección requerida
+                      </span>
+                  </div>
+                </div>
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                  <input placeholder="Correo electrónico" formControlName="ctrlCorreo" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                  <div *ngIf="formUpdateUser.controls.ctrlCorreo.touched && formUpdateUser.controls.ctrlCorreo.invalid">
+                    <span *ngIf="formUpdateUser.controls.ctrlCorreo.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Correo requerido
+                    </span>
+                    <span *ngIf="formUpdateUser.controls.ctrlCorreo.hasError('email')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Formato de correo no válido
+                    </span>
+                  </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1 min-w-64 w-3/5">
+              <div class="relative">
+                <input #nameInput placeholder="Confirmar Contraseña *" formControlName="ctrlPass" [type]="showPass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                <div class="absolute inset-y-0 right-2 content-center cursor-pointer" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200' : 'text-[var(--color-black-alt)]'" (click)="showPass = !showPass">
+                  <app-icon class="p-1" [icon]="showPass ? 'faEyeSlash' : 'faEye'"></app-icon>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex flex-row gap-6 w-full">
+                <div class="flex flex-col gap-1 min-w-64 w-full place-items-end">
+                    <app-btn class="!text-base w-3/5" [color]="'bordeado'" (click)="waitList[2] = false">Cancelar</app-btn>
+                </div>
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                    <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit" [loading]="waitList[1]">Buscar</app-btn>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

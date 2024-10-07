@@ -35,7 +35,7 @@ export class NotifierInterceptor implements HttpInterceptor {
             break;
           case HttpStatusCode.NotFound:
             // TODO: Redireccionar a página 404
-            this._notification.error('Recurso no encontrado.');
+            
             break;
         }
         return throwError(response);

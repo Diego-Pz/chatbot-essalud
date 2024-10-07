@@ -21,10 +21,10 @@ export class SidenavComponent {
   ];
 
   optAdministrator: any[] = [
-    {nomVista: 'Mantenimiento de usuarios', rutaVista: '/administracion-usuario'},
-    {nomVista: 'Preguntas frecuentes', rutaVista: '/administracion-preguntas'},
-    {nomVista: 'Bandeja de preguntas', rutaVista: '/administracion-bandeja'},
-    {nomVista: 'Análisis de interacciones', rutaVista: '/administracion-metricas'},
+    {nomVista: 'Mantenimiento de usuarios', icon: 'faUsers', rutaVista: '/administracion-usuario'},
+    {nomVista: 'Preguntas frecuentes', icon: 'faTableList', rutaVista: '/administracion-preguntas'},
+    {nomVista: 'Bandeja de preguntas', icon: 'faEnvelope', rutaVista: '/administracion-bandeja'},
+    {nomVista: 'Análisis de interacciones', icon: 'faPoll', rutaVista: '/administracion-metricas'},
   ]
 
   adminLogged: boolean = false;

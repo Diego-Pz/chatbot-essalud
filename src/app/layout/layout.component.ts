@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CompartidoFuncionesService } from '../data/service/compartido-funciones.service';
 
 @Component({
@@ -9,5 +9,25 @@ import { CompartidoFuncionesService } from '../data/service/compartido-funciones
 export class LayoutComponent {
   opened = true;
 
+  isMovil = false;
+
   constructor(public compartidoService: CompartidoFuncionesService,){}
+
+  ngOnInit(){
+    this.comprobacionMovil();
+  }
+
+  comprobacionMovil(){
+    if (window.innerWidth <= 1090){
+      this.isMovil = true;
+    }
+    else{
+      this.isMovil = false;
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.comprobacionMovil();
+  }
 }
