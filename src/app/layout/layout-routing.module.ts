@@ -19,6 +19,24 @@ const routes: Routes = [
         canActivate: [authUsernGuard, authManagementGuard],
         loadChildren: () =>
           import('./../pages/mantenimiento-usuario/mantenimiento-usuario.module').then((m) => m.MantenimientoUsuarioModule),
+      },
+      {
+        path: 'administracion-preguntas',
+        canActivate: [authUsernGuard, authManagementGuard],
+        loadChildren: () =>
+          import('./../pages/mantenimiento-preguntas/mantenimiento-preguntas.module').then((m) => m.MantenimientoPreguntasModule),
+      },
+      {
+        path: 'administracion-bandeja',
+        canActivate: [authUsernGuard, authManagementGuard],
+        loadChildren: () =>
+          import('./../pages/mantenimiento-bandeja/mantenimiento-bandeja.module').then((m) => m.MantenimientoBandejaModule),
+      },
+      {
+        path: 'administracion-metricas',
+        canActivate: [authUsernGuard, authManagementGuard],
+        loadChildren: () =>
+          import('./../pages/mantenimiento-metricas/mantenimiento-metricas.module').then((m) => m.MantenimientoMetricasModule),
       }
     ]
   },

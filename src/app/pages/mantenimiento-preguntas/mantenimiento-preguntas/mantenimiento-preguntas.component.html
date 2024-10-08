@@ -1,1 +1,36 @@
-<p>mantenimiento-preguntas works!</p>
+<div class="flex justify-center items-center containerInfo w-full">
+    <div class="border-2 rounded-xl py-8 px-10 flex flex-col text-[var(--color-a-degrade)] gap-6 items-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
+        <span class="text-2xl font-semibold text-center">Mantenimiento de Preguntas</span>
+        <div class="flex flex-col gap-4 items-center w-full" *ngIf="!pregSelected">
+            <app-btn class="w-full max-w-[75vw]" color="btnEvaluacion" *ngFor="let optPreg of chatbotService.listPreguntasFrecuentes, index as i" (click)="pregSelected = optPreg">
+                <div class="textOptions">
+                    <span>{{optPreg.pregunta}}</span>
+                </div>
+            </app-btn>
+        </div>
+        <form class="flex flex-col gap-4 items-center w-full" *ngIf="pregSelected" [formGroup]="formChange" (ngSubmit)="updatePregunta()">
+            <app-btn class="w-full" color="btnEvaluacion">
+                <div class="textOptions">
+                    <span>{{pregSelected.pregunta}}</span>
+                </div>
+            </app-btn>
+            <div class="flex flex-col gap-1 min-w-64 w-full">
+              <input placeholder="Editar pregunta" formControlName="ctrlPreguntaChange" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+              <div *ngIf="formChange.controls.ctrlPreguntaChange.touched && formChange.controls.ctrlPreguntaChange.invalid">
+                  <span *ngIf="formChange.controls.ctrlPreguntaChange.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Se debe ingresar una pregunta para reemplazar
+                  </span>
+              </div>
+            </div>
+            
+            <div class="flex flex-row gap-6 w-full">
+                <div class="flex flex-col gap-1 min-w-64 w-full place-items-end">
+                    <app-btn class="!text-base w-3/5" [color]="'bordeado'" (click)="return()">Cancelar</app-btn>
+                </div>
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                    <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit">Aceptar</app-btn>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
