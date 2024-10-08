@@ -1,8 +1,8 @@
-<div class="rounded-lg border-2 relative" [ngClass]="serviciosCompartidos.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
+<div class="rounded-lg border-2 relative overflow-auto max-h-[85vh]" [ngClass]="serviciosCompartidos.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
     <div class="flex flex-col items-center gap-8 py-6 px-4">
-        <span class="text-2xl font-semibold">Preguntas Frecuentes</span>
+        <span class="text-2xl font-semibold text-center">Preguntas Frecuentes</span>
         <app-btn class="w-full" color="btnEvaluacion"*ngFor="let optPreg of chatbotService.listPreguntasFrecuentes, index as i" (click)="selectPregunta(optPreg.pregunta)">
-            <div class="text-lg text-center">
+            <div class="textOptions">
                 <span>{{optPreg.pregunta}}</span>
             </div>
         </app-btn>

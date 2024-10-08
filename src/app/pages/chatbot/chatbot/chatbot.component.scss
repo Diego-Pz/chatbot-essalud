@@ -55,3 +55,26 @@
     opacity: 1;
   }
 }
+
+.textOptions{
+  text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+  .textOptions{
+      font-size: 2.5vw;
+      line-height: 1rem;
+  }
+}
+
+@media screen and (min-width: 426px) and (max-width: 500px) {
+  .textOptions{
+      font-size: 2vw;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width: 768px) {
+  .textOptions{
+      font-size: 1.5vw;
+  }
+}

@@ -24,7 +24,7 @@
         <div class="flex flex-col gap-2.5 w-11/12 self-center overflow-auto hide-scrollbar" #chatContainer>
             <div class="flex flex-row" *ngFor="let interaccion of listRespuestas, index as i">
                 <div class="rounded-lg border py-4 px-6 w-full" [ngClass]="[interaccion.rol == 'system' ? 'text-start border-l-8 !border-l-[var(--color-claro)]' : 'text-end border-r-8 !border-r-[var(--color-base-claro)]', compartidoService.ctrlModoOscuro.value ? 'styleRespuestaDark' : 'styleRespuestaLight']">
-                    <span *ngIf="interaccion.respuestaRealizada" class="whitespace-pre-line">{{interaccion.interaccion}}</span>
+                    <span *ngIf="interaccion.respuestaRealizada" class="whitespace-pre-line textOptions">{{interaccion.interaccion}}</span>
                     <div *ngIf="!interaccion.respuestaRealizada" class="loading">
                         <span class="dot"></span>
                         <span class="dot"></span>
