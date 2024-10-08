@@ -1,5 +1,7 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
+import { ChatbotService } from 'src/app/data/service/chatbot.service';
+import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 
 @Component({
@@ -14,7 +16,9 @@ export class DialogPreguntasFrecuentesComponent {
   ];
   
   constructor(private notificationService                               : NotificationService,
-              private _dialogRef                                        : DialogRef<any>,) {
+              private _dialogRef                                        : DialogRef<any>,
+              public serviciosCompartidos                               : CompartidoFuncionesService,
+              public chatbotService                                     : ChatbotService) {
 
   }
 

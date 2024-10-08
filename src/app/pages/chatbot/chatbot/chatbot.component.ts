@@ -36,6 +36,10 @@ export class ChatbotComponent {
     
   }
 
+  ngAfterViewChecked(){
+    this.scrollToBottom();
+  }
+
   sendPregunta(){
     if (this.formPregunta.valid && this.dataReady) {
       this.dataReady = false;
@@ -43,13 +47,11 @@ export class ChatbotComponent {
       this.listRespuestas.push({rol: 'usuario', interaccion: this.formPregunta.controls.ctrlPregunta.value!, respuestaRealizada: true})
       this.formPregunta.reset()
       this.listRespuestas.push({rol: 'system', interaccion: '', respuestaRealizada: false})
-      this.scrollToBottom();
       this.chatbotService.realizarConsulta(payload).then((data)=>{
         if (data.code == 200) {
           this.listRespuestas[this.listRespuestas.length - 1].interaccion = data.response;
           this.listRespuestas[this.listRespuestas.length - 1].respuestaRealizada = true;
           this.dataReady = true;
-          this.scrollToBottom();
         }
         else{
           this.notificationService.warning(data.response);

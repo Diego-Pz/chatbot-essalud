@@ -80,11 +80,10 @@ export class BtnComponent {
       'focus:ring-gray-100': true,
     },
     btnEvaluacion: {
-      'text-white': true,
-      'bg-[var(--color-evaluacion-btn)]': true,
-      'border-[var(--color-evaluacion-btn)]': true,
-      'border-[0.0125rem]': true,
-      'hover:bg-gray-300': true,
+      'text-[var(--color-black-alt)]': true,
+      'bg-[var(--color-pag-claro)]': true,
+      'hover:bg-[var(--color-base-claro)]': true,
+      'hover:text-white': true
     },
     btnEvaluacionWhite: {
       'bg-white': true,
