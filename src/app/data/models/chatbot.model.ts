@@ -3,6 +3,10 @@ export interface RequestComunicacionChatbot{
     identification?: string;
 }
 
+export interface RequestComunicacionChatbotRNN{
+    pregunta: string;
+}
+
 export interface StructureInteraccionChatbot{
     rol: string;
     interaccion: string;

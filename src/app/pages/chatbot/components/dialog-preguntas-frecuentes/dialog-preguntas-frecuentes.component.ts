@@ -10,10 +10,6 @@ import { NotificationService } from 'src/app/data/service/notification.service';
   styleUrls: ['./dialog-preguntas-frecuentes.component.scss']
 })
 export class DialogPreguntasFrecuentesComponent {
-  listPreguntas: any[] = [
-    {pregunta: '¿Como puedo cancelar mi plan de seguro de salud?'},
-    {pregunta: '¿Qué planes de seguros de salud están disponibles?'}
-  ];
   
   constructor(private notificationService                               : NotificationService,
               private _dialogRef                                        : DialogRef<any>,

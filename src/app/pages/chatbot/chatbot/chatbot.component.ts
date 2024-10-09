@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { RequestComunicacionChatbot, StructureInteraccionChatbot } from 'src/app/data/models/chatbot.model';
+import { RequestComunicacionChatbot, RequestComunicacionChatbotRNN, StructureInteraccionChatbot } from 'src/app/data/models/chatbot.model';
 import { ChatbotService } from 'src/app/data/service/chatbot.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 import { DialogPreguntasFrecuentesComponent } from '../components/dialog-preguntas-frecuentes/dialog-preguntas-frecuentes.component';
@@ -66,6 +66,32 @@ export class ChatbotComponent {
     }
   }
 
+  sendPreguntaRNN(){
+    if (this.formPregunta.valid && this.dataReady) {
+      this.dataReady = false;
+      let payload = this.getPayloadRNN();
+      this.listRespuestas.push({rol: 'usuario', interaccion: this.formPregunta.controls.ctrlPregunta.value!, respuestaRealizada: true})
+      this.formPregunta.reset()
+      this.listRespuestas.push({rol: 'system', interaccion: '', respuestaRealizada: false})
+      this.chatbotService.realizarConsultaRNN(payload).subscribe({
+        next: (data)=>{
+          this.listRespuestas[this.listRespuestas.length - 1].interaccion = data.respuesta;
+          this.listRespuestas[this.listRespuestas.length - 1].respuestaRealizada = true;
+          this.dataReady = true;
+        },
+        error: (error)=>{
+          this.dataReady = false;
+          this.notificationService.warning(error.error.error);
+        }
+
+      })
+    }
+    else{
+      this.notificationService.warning('Escriba su pregunta en el campo de texto, por favor');
+      this.dataReady = true;
+    }
+  }
+
   getPayloadPregunta(): RequestComunicacionChatbot{
     let payload: RequestComunicacionChatbot = {
       question: this.formPregunta.controls.ctrlPregunta.value!
@@ -76,6 +102,12 @@ export class ChatbotComponent {
     }
 
     return payload;
+  }
+
+  getPayloadRNN(): RequestComunicacionChatbotRNN {
+    return {
+      pregunta: this.formPregunta.controls.ctrlPregunta.value!
+    }
   }
 
   private scrollToBottom(): void {
@@ -92,7 +124,7 @@ export class ChatbotComponent {
     dialogRef.closed.subscribe((data: any) =>{
       if (data) {
         this.formPregunta.controls.ctrlPregunta.setValue(data)
-        this.sendPregunta()
+        this.sendPreguntaRNN()
       }
     })
   }
