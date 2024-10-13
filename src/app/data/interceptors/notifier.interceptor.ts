@@ -27,7 +27,7 @@ export class NotifierInterceptor implements HttpInterceptor {
           case HttpStatusCode.BadRequest:
             const message = response?.error?.message;
             if (message) {
-              this._notification.warning(message);
+              
             }
             break;
           case HttpStatusCode.InternalServerError:

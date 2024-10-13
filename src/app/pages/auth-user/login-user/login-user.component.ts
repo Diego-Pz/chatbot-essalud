@@ -50,13 +50,14 @@ export class LoginUserComponent {
           this.wait = false;
         },
         error: (error)=>{
-          this.notificationService.warning(error.error.error);
+          this.notificationService.warning('Datos de usuario no válidos, por favor revisar');
           this.wait = false;
         }
       })
     }
     else{
       this.formLogin.markAllAsTouched()
+      this.notificationService.warning('Hay campos que no han sido llenados');
     }
   }
 

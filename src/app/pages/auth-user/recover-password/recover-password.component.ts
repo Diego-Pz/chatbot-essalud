@@ -50,6 +50,7 @@ export class RecoverPasswordComponent {
         },
         error: (error)=>{
           this.wait = false;
+          this.notificationService.warning('El correo electrónico ingresado no corresponde a un usuario');
         }
       })
     }

@@ -31,6 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // TODO: agregar FORBIDDEN
         if (response.status === HttpStatusCode.Unauthorized) {
           this._authService.logout();
+          window.location.reload();
         }
         return throwError(response);
       })
