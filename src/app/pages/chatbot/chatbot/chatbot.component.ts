@@ -61,7 +61,7 @@ export class ChatbotComponent {
     })
     }
     else{
-      this.notificationService.warning('Escriba su pregunta en el campo de texto, por favor');
+      this.notificationService.warning('Ingrese su pregunta');
       this.dataReady = true;
     }
   }
@@ -87,7 +87,7 @@ export class ChatbotComponent {
       })
     }
     else{
-      this.notificationService.warning('Escriba su pregunta en el campo de texto, por favor');
+      this.notificationService.warning('Ingrese su pregunta');
       this.dataReady = true;
     }
   }

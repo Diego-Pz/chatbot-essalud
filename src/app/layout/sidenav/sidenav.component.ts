@@ -22,7 +22,7 @@ export class SidenavComponent {
 
   optAdministrator: any[] = [
     {nomVista: 'Mantenimiento de usuarios', icon: 'faUsers', rutaVista: '/administracion-usuario'},
-    {nomVista: 'Preguntas frecuentes', icon: 'faTableList', rutaVista: '/administracion-preguntas'},
+    {nomVista: 'Preguntas y respuestas', icon: 'faTableList', rutaVista: '/administracion-preguntas'},
     {nomVista: 'Bandeja de preguntas', icon: 'faEnvelope', rutaVista: '/administracion-bandeja'},
     {nomVista: 'Análisis de interacciones', icon: 'faPoll', rutaVista: '/administracion-metricas'},
   ]

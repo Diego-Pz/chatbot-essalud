@@ -46,7 +46,7 @@ export class DialogValoracionComponent {
       this.chatbotService.registerOpinion(this.getPayload()).subscribe({
         next: (data)=>{
           this._dialogRef.close(1)
-          this.notificationService.success('Se registró su opinión');
+          this.notificationService.success('Gracias por su calificación');
           this.waitDataSend = false;
         },
         error: (error)=>{

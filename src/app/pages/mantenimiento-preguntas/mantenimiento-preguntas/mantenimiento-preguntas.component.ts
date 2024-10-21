@@ -62,7 +62,7 @@ export class MantenimientoPreguntasComponent {
           this.getPreguntas();
           this.pregSelected = null;
     
-          this.notificationService.success('Se actualizó la pregunta seleccionada');
+          this.notificationService.success('Se registró el cambio de la pregunta');
           this.readySend = false;
         },
         error: (error)=>{
