@@ -1,0 +1,30 @@
+<div class="rounded-lg border-2 relative overflow-auto max-h-[85vh] min-h-[240px]" [ngClass]="serviciosCompartidos.ctrlModoOscuro.value ? 'bg-[#121212] text-white border-gray-300' : 'bg-white text-[var(--color-a-degrade)] border-[var(--color-black-alt)]'">
+    <div class="flex flex-col items-center gap-8 py-6 px-4">
+        <span class="text-2xl font-semibold text-center">{{data.phone ? 'Contactar con usuario' : 'Responder pregunta' }}</span>
+        <div class="flex flex-col items-center gap-2.5 text-center" *ngIf="data.phone">
+            <span class="text-[var(--color-black-alt)]">Comuníquese al siguiente número y señale si la atención se ha dado:</span>
+            <span class="text-2xl font-semibold">{{data.phone}}</span>
+        </div>
+        <div class="flex flex-col items-center gap-4 text-center w-full" *ngIf="!data.phone">
+            <span [ngClass]="serviciosCompartidos.ctrlModoOscuro.value ? '' : 'text-[var(--color-black-alt)]'">{{data.ask}}</span>
+            <div class="flex flex-col gap-1.5 w-full items-start">
+                <input #nameInput placeholder="Respuesta..." [formControl]="ctrlRespuesta" name="respuestaPregunta" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="serviciosCompartidos.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                <div *ngIf="ctrlRespuesta.touched && ctrlRespuesta.invalid">
+                    <span *ngIf="ctrlRespuesta.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Respuesta requerida
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row gap-4">
+            <div class="relative rounded-md shadow-sm botonApariencia">
+                <app-btn color="white" (click)="onClose()">Cancelar
+                </app-btn>
+            </div>
+            <div class="relative rounded-md shadow-sm botonApariencia">
+                <app-btn [color]="'base'" (click)="sendData()" [loading]="waitSend">{{ data.phone ? 'Atendido' : 'Enviar'}}
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</div>

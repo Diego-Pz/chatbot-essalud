@@ -1,48 +1,50 @@
 <div class="flex justify-center items-center containerInfo w-full">
-    <div class="border-2 rounded-xl py-8 px-10 flex flex-col text-[var(--color-a-degrade)] gap-6 items-center min-h-[240px] relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
+    <div class="border-2 rounded-xl text-[var(--color-a-degrade)] min-h-[240px] relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
         <div class="bg-[#FFFFFF88] w-full h-full z-10 absolute flex flex-col text-2xl items-center justify-center gap-2.5" *ngIf="!waitList">
             <app-icon [pulse]="true" icon="faSpinner"></app-icon>
             <b>Obteniendo Datos</b>
         </div>
-        <span class="text-2xl font-semibold text-center">Mantenimiento de Preguntas</span>
-        <div class="flex flex-col gap-4 items-center w-full" *ngIf="!pregSelected">
-            <app-btn class="w-full max-w-[75vw]" color="btnEvaluacion" *ngFor="let optPreg of listPreguntas, index as i" (click)="pregSelected = optPreg">
-                <div class="textOptions">
-                    <span>{{optPreg.question}}</span>
-                </div>
-            </app-btn>
-        </div>
-        <form class="flex flex-col gap-4 items-center w-full" *ngIf="pregSelected" [formGroup]="formChange" (ngSubmit)="updatePregunta()">
-            <app-btn class="w-full" color="btnEvaluacion">
-                <div class="textOptions">
-                    <span>{{pregSelected.question}}</span>
-                </div>
-            </app-btn>
-            <div class="flex flex-col gap-1 min-w-64 w-full">
-              <input placeholder="Editar pregunta" formControlName="ctrlPreguntaChange" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
-              <div *ngIf="formChange.controls.ctrlPreguntaChange.touched && formChange.controls.ctrlPreguntaChange.invalid">
-                  <span *ngIf="formChange.controls.ctrlPreguntaChange.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                        Se debe ingresar una pregunta para reemplazar
-                  </span>
-              </div>
+        <div class="flex flex-col gap-6 items-center py-8 px-10">
+            <span class="text-2xl font-semibold text-center">Mantenimiento de Preguntas</span>
+            <div class="flex flex-col gap-4 items-center w-full" *ngIf="!pregSelected">
+                <app-btn class="w-full max-w-[75vw]" color="btnEvaluacion" *ngFor="let optPreg of listPreguntas, index as i" (click)="pregSelected = optPreg">
+                    <div class="textOptions">
+                        <span>{{optPreg.question}}</span>
+                    </div>
+                </app-btn>
             </div>
-            <div class="flex flex-col gap-1 min-w-64 w-full">
-              <textarea placeholder="Editar respuesta" formControlName="ctrlRespuestaChange" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"></textarea>
-              <div *ngIf="formChange.controls.ctrlRespuestaChange.touched && formChange.controls.ctrlRespuestaChange.invalid">
-                  <span *ngIf="formChange.controls.ctrlRespuestaChange.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                        Se debe ingresar una respuesta para reemplazar
-                  </span>
-              </div>
-            </div>
-            
-            <div class="flex flex-row gap-6 w-full">
-                <div class="flex flex-col gap-1 min-w-64 w-full place-items-end">
-                    <app-btn class="!text-base w-3/5" [color]="'bordeado'" (click)="return()">Cancelar</app-btn>
+            <form class="flex flex-col gap-4 items-center w-full" *ngIf="pregSelected" [formGroup]="formChange" (ngSubmit)="updatePregunta()">
+                <app-btn class="w-full" color="btnEvaluacion">
+                    <div class="textOptions">
+                        <span>{{pregSelected.question}}</span>
+                    </div>
+                </app-btn>
+                <div class="flex flex-col gap-1 min-w-64 w-full">
+                  <input placeholder="Editar pregunta" formControlName="ctrlPreguntaChange" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                  <div *ngIf="formChange.controls.ctrlPreguntaChange.touched && formChange.controls.ctrlPreguntaChange.invalid">
+                      <span *ngIf="formChange.controls.ctrlPreguntaChange.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                            Se debe ingresar una pregunta para reemplazar
+                      </span>
+                  </div>
                 </div>
                 <div class="flex flex-col gap-1 min-w-64 w-full">
-                    <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit" [loading]="readySend">Aceptar</app-btn>
+                  <textarea placeholder="Editar respuesta" formControlName="ctrlRespuestaChange" type="text" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"></textarea>
+                  <div *ngIf="formChange.controls.ctrlRespuestaChange.touched && formChange.controls.ctrlRespuestaChange.invalid">
+                      <span *ngIf="formChange.controls.ctrlRespuestaChange.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                            Se debe ingresar una respuesta para reemplazar
+                      </span>
+                  </div>
                 </div>
-            </div>
-        </form>
+                
+                <div class="flex flex-row gap-6 w-full">
+                    <div class="flex flex-col gap-1 min-w-64 w-full place-items-end">
+                        <app-btn class="!text-base w-3/5" [color]="'bordeado'" (click)="return()">Cancelar</app-btn>
+                    </div>
+                    <div class="flex flex-col gap-1 min-w-64 w-full">
+                        <app-btn class="!text-base w-3/5" [color]="'base'" typeBtn="submit" [loading]="readySend">Aceptar</app-btn>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

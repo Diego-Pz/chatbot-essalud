@@ -1,0 +1,17 @@
+<div class="px-8 py-5 rounded-md botonBorde" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] text-[var(--color-a-degrade)] border-gray-300' : 'bg-white text-[#344563] border-[var(--color-black-alt)]'">
+    <div class="flex flex-col gap-4 items-center max-w-[400px] text-center">
+        <img class="w-20" src="assets/svg/alert-confirmation.svg">
+        <span class="text-xl font-semibold">{{data.titulo}}</span>
+        <span class="text-sm">{{data.subText}}</span>
+        <div class="flex flex-row gap-4">
+            <div class="relative rounded-md shadow-sm botonApariencia">
+                <app-btn color="white" (click)="onClose()">Cancelar
+                </app-btn>
+            </div>
+            <div class="relative rounded-md shadow-sm botonApariencia">
+                <app-btn [color]="'base'" (click)="onConfirm()">{{'Confirmar'}}
+                </app-btn>
+            </div>
+        </div>
+    </div>
+</div>

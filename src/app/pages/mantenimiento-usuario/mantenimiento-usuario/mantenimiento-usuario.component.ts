@@ -1,9 +1,11 @@
+import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { RequestEditInfoUser, RequestFindUser } from 'src/app/data/models/user.model';
 import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 import { UserServiceService } from 'src/app/data/service/user-service.service';
+import { DialogConfirmacionComponent } from '../../chatbot/components/dialog-confirmacion/dialog-confirmacion.component';
 
 @Component({
   selector: 'app-mantenimiento-usuario',
@@ -27,6 +29,7 @@ export class MantenimientoUsuarioComponent {
 
   constructor(public compartidoService      : CompartidoFuncionesService,
               private userService           : UserServiceService,
+              private dialog                : Dialog,
               private notificationService   : NotificationService,
               private _formBuilder          : FormBuilder,){
 
@@ -64,19 +67,31 @@ export class MantenimientoUsuarioComponent {
 
   updateDataUser(){
     if (this.formUpdateUser.valid) {
-      this.waitList[1] = true;
-      this.userService.editInfoUser(this.getPayloadUpdate()).subscribe({
-        next: (data)=>{
-          this.notificationService.success('Cambio registrado en usuario');
-          this.formUpdateUser.reset();
-          this.waitList[1] = false;
-          this.waitList[2] = false;
-        },
-        error: (error)=>{
-          this.waitList[1] = false;
-          this.notificationService.warning(error.error.error);
-        }        
+      const dialogRef = this.dialog.open(DialogConfirmacionComponent,{
+        data:{
+          titulo: '¿Desea realizar estos cambios?',
+          subText: 'Se notificará los cambios realizados al correo del usuario',
+          type: 1
+        }
       })
+  
+      dialogRef.closed.subscribe(result => {
+        if (result == 1) {
+          this.waitList[1] = true;
+          this.userService.editInfoUser(this.getPayloadUpdate()).subscribe({
+            next: (data)=>{
+              this.notificationService.success('Cambio registrado en usuario');
+              this.formUpdateUser.reset();
+              this.waitList[1] = false;
+              this.waitList[2] = false;
+            },
+            error: (error)=>{
+              this.waitList[1] = false;
+              this.notificationService.warning(error.error.error);
+            }        
+          })
+        }
+      });
     }
     else{
       this.formUpdateUser.markAllAsTouched();

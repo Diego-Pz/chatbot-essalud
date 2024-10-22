@@ -1,1 +1,29 @@
-<p>mantenimiento-bandeja works!</p>
+<div class="flex containerInfo w-full">
+    <div class="border-2 rounded-xl w-full text-[var(--color-a-degrade)] min-h-[240px] relative" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
+        <div class="bg-[#FFFFFF88] w-full h-full z-10 absolute flex flex-col text-2xl items-center justify-center gap-2.5" *ngIf="!waitList">
+            <app-icon [pulse]="true" icon="faSpinner"></app-icon>
+            <b>Obteniendo Datos</b>
+        </div>
+        <div class="flex flex-col gap-6 items-center py-8 px-10">
+            <span class="text-2xl font-semibold text-center">Bandeja de Preguntas</span>
+            <div class="flex flex-row gap-6 flex-wrap w-full">
+                <div class="containerOptPregunta" *ngFor="let opcion of listPreguntas, index as i" [ngClass]="[compartidoService.ctrlModoOscuro.value ? 'optBlack' : 'optWhite', opcion.contacted == 1 ? (compartidoService.ctrlModoOscuro.value ? 'optContestadoBlack' : 'optContestado') : '']" (click)="showToAnswer(opcion)">
+                    <div class="flex flex-row gap-2.5 justify-between">
+                        <div class="flex flex-row gap-2.5 items-center">
+                            <app-icon class="text-4xl" icon="faUser"></app-icon>
+                            <div class="flex flex-col gap-1">
+                                <span><b>ID Usuario: </b>{{opcion.identification}}</span>
+                                <span><b>Estado: </b><span class="font-semibold" [ngClass]="opcion.contacted == 0 ? 'text-yellow-500' : 'text-green-500'">{{opcion.contacted == 0 ? 'Pendiente' : 'Resuelto'}}</span></span>
+                            </div>
+                        </div>                      
+                    </div>
+                    <div class="flex flex-row gap-2.5">
+                        <b class="shrink-0"><app-icon [icon]="opcion.phone ? 'faPhone' : 'faMessage'"></app-icon> : </b>                        
+                        <span>{{opcion.phone ? opcion.phone : opcion.ask}}</span>
+                    </div>  
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
