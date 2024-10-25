@@ -17,7 +17,7 @@
         <div class="flex flex-col gap-3" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''" *ngIf="!adminLogged">
             <div class="flex flex-row items-center justify-between">
                 <span class="font-bold text-[#1D1B20]">Archivos recientes</span>
-                <app-icon icon="faAdd" class="w-[18.94px] cursor-pointer" (click)="openDialogAddArchivos()"></app-icon>
+                <app-icon icon="faAdd" class="w-[18.94px] cursor-pointer" (click)="openDialogAddArchivos()" matTooltip="Añadir contrato por ver"></app-icon>
             </div>
             <div class="flex flex-col gap-2.5">
                 <div class="flex flex-row gap-2.5 pr-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200">

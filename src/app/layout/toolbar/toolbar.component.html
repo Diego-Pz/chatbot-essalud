@@ -3,9 +3,26 @@
         <app-icon icon="faBars"></app-icon>
     </div>
     <div class="flex flex-row gap-1.5 items-center">
-        <div class="w-[48px] h-[48px] flex justify-center items-center" *ngIf="userData" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'invert' : ''">
+        <div class="w-[48px] h-[48px] flex justify-center items-center rounded-full hover:bg-gray-200 cursor-pointer" *ngIf="userData" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'invert' : ''" (click)="getDataNotificaciones()" [cdkMenuTriggerFor]="menuNoti">
             <img src="assets/svg/icon-bell.svg" alt=""/>
         </div>
+        <ng-template #menuNoti>
+            <div class="botonBorde border-[#C5C5C5] border-solid text-[14px] min-h-20 w-[234px]" cdkMenu [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)] bg-[#F7F7F9]'">
+                <div class="w-full h-full flex flex-col text-center items-center justify-center gap-2.5" *ngIf="waitListaNotificaciones">
+                    <app-icon [pulse]="true" icon="faSpinner"></app-icon>
+                    <b>Obteniendo Notificaciones</b>
+                </div>
+                <div class="flex flex-col max-h-80 overflow-auto h-full hide-scrollbar" *ngIf="!waitListaNotificaciones">
+                    <div class="h-full w-full flex justify-center items-center font-semibold" *ngIf="listNotificaciones.length == 0">
+                        <span>No se tienen notificaciones</span>
+                    </div>
+                    <div class="w-full p-3 flex flex-row gap-3 whitespace-pre-wrap border-b" *ngFor="let notificacion of listNotificaciones, index as i" [ngClass]="i != listNotificaciones.length - 1 ? 'border-gray-300' : ''">
+                        <app-icon icon="faCircleExclamation"></app-icon>
+                        <span>{{notificacion.message}}</span>
+                    </div>
+                </div>                
+            </div>
+        </ng-template>
         <div class="py-[14px] px-4 border-[#C5C5C5] border-solid border rounded-2xl select-none flex flex-row gap-5" *ngIf="userData" [cdkMenuTriggerFor]="optionsAccount" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)] bg-[#F7F7F9]'">
             <span>Usuario registrado</span>
             <img src="assets/svg/icon-down.svg" alt="" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'invert' : ''"/>

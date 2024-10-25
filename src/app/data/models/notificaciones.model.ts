@@ -1,3 +1,7 @@
+export interface RequestListNotification {
+    identification: string,
+}
+
 export interface RequestRegisterNotification {
     message: string,
     insuranceType?: number,

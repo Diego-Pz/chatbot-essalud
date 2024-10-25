@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { RequestRegisterNotification, RequestWatchNotification } from '../models/notificaciones.model';
+import { RequestListNotification, RequestRegisterNotification, RequestWatchNotification } from '../models/notificaciones.model';
 
 const URL_BASE = `${environment.API}/notification`;
 
@@ -12,9 +12,9 @@ export class NotificacionesUserService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  getListNotificaciones(){
+  getListNotificaciones(model: RequestListNotification){
     const url = `${URL_BASE}/list`;
-    return this._httpClient.get<any>(url);
+    return this._httpClient.post<any>(url, model);
   }
 
   registerNotificacion(model: RequestRegisterNotification){

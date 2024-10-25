@@ -57,7 +57,7 @@ export class MantenimientoUsuarioComponent {
         error: (error)=>{
           this.waitList[0] = false;
           this.notificationService.warning(error.error.detail);
-        }        
+        }
       })
     }
     else{

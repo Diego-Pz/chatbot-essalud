@@ -7,7 +7,7 @@
         <div class="flex flex-col gap-6 items-center py-8 px-10">
             <span class="text-2xl font-semibold text-center">Bandeja de Preguntas</span>
             <div class="flex flex-row gap-6 flex-wrap w-full">
-                <div class="containerOptPregunta" *ngFor="let opcion of listPreguntas, index as i" [ngClass]="[compartidoService.ctrlModoOscuro.value ? 'optBlack' : 'optWhite', opcion.contacted == 1 ? (compartidoService.ctrlModoOscuro.value ? 'optContestadoBlack' : 'optContestado') : '']" (click)="showToAnswer(opcion)">
+                <div class="containerOptPregunta" *ngFor="let opcion of listPreguntas, index as i" [ngClass]="[compartidoService.ctrlModoOscuro.value ? 'optBlack' : 'optWhite', opcion.contacted == 1 ? (compartidoService.ctrlModoOscuro.value ? 'optContestadoBlack' : 'optContestado') : '']" (click)="opcion.contacted == 0 ? showToAnswer(opcion) : null">
                     <div class="flex flex-row gap-2.5 justify-between">
                         <div class="flex flex-row gap-2.5 items-center">
                             <app-icon class="text-4xl" icon="faUser"></app-icon>

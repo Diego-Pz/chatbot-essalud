@@ -12,6 +12,8 @@ import { UserServiceService } from 'src/app/data/service/user-service.service';
   styleUrls: ['./update-data-user.component.scss']
 })
 export class UpdateDataUserComponent {
+  userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
+  infoUser = Object();
   wait: boolean = false;
   tempSelectPag: any = Object();
   ctrlSelectPag = new FormControl(null);
@@ -40,6 +42,15 @@ export class UpdateDataUserComponent {
               private _formBuilder          : FormBuilder,){}
 
   ngOnInit(){
+    this.userService.getUserInfo({identification: this.userData.identification}).subscribe({
+      next: (data)=>{
+        console.log(data)
+        this.ctrlTipoSeguro.setValue(data.insurance_type)
+      },
+      error: (error)=>{
+        this.notificationService.warning(error.error.detail);
+      }
+    })
     this.ctrlSelectPag.valueChanges.subscribe((data)=>{
       this.tempSelectPag = data;
     })

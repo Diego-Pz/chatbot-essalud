@@ -5,6 +5,8 @@ import { AppRoute } from 'src/app/data/constants/app-route.constant';
 import { AuthUserService } from 'src/app/data/service/auth-user.service';
 import { UpdateDataUserComponent } from './update-data-user/update-data-user.component';
 import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
+import { NotificationService } from 'src/app/data/service/notification.service';
+import { NotificacionesUserService } from 'src/app/data/service/notificaciones-user.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,6 +14,8 @@ import { CompartidoFuncionesService } from 'src/app/data/service/compartido-func
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
+  listNotificaciones: any[] = [];
+  waitListaNotificaciones = false;
 
   userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
   @Output() toggleSidenav = new EventEmitter();
@@ -19,6 +23,8 @@ export class ToolbarComponent {
   constructor(private router: Router,
               private dialog: Dialog,
               public compartidoService: CompartidoFuncionesService,
+              private notificationService: NotificationService,
+              private notiUserService: NotificacionesUserService,
               private authService:  AuthUserService
   ){
 
@@ -27,6 +33,22 @@ export class ToolbarComponent {
   logout(){
     this.authService.logout();
     window.location.reload();
+  }
+
+  getDataNotificaciones(){
+    this.waitListaNotificaciones = true;
+    this.listNotificaciones = [];
+    this.notiUserService.getListNotificaciones({identification: this.userData.identification}).subscribe({
+      next: (data)=>{
+        this.listNotificaciones = data.data.sort((a: any,b: any)=> b.id - a.id);
+        console.log(this.listNotificaciones);
+        this.waitListaNotificaciones = false;
+      },
+      error: (error)=>{
+        this.waitListaNotificaciones = false;
+        this.notificationService.warning(error.error.error);
+      }
+    })
   }
 
   onToggleSidenav(): void {
