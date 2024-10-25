@@ -3,8 +3,8 @@
         <div class="flex items-center text-[var(--color-a-degrade)]" [ngClass]="[listRespuestas.length > 0 ? 'flex-row gap-5' : 'flex-col gap-[44px]']">
             <span class="text-center" [ngClass]="listRespuestas.length > 0 ? 'text-font-variado' : 'text-[57px] leading-[57px]'">¿Cómo puedo ayudarte?</span>
             <div class="flex flex-row gap-3 justify-center" [ngClass]="listRespuestas.length > 0 ? 'text-font-subvariado' : 'text-[22px] leading-[28px]'">
-                <div class="!rounded-xl p-4 max-w-[254px] relative botonBorde cursor-pointer" [ngClass]="[listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]', compartidoService.ctrlModoOscuro.value ? 'bg-[#342f36] hover:bg-[#404040]' : 'bg-[#E6E0E9] hover:bg-[#B4AFB7] text-[var(--color-black-alt)]']">
-                    <span>¿Que tipo de seguro necesito?</span>
+                <div class="!rounded-xl p-4 max-w-[254px] relative botonBorde cursor-pointer" [ngClass]="[listRespuestas.length > 0 ? 'pr-14 content-center' : 'h-[226px]', compartidoService.ctrlModoOscuro.value ? 'bg-[#342f36] hover:bg-[#404040]' : 'bg-[#E6E0E9] hover:bg-[#B4AFB7] text-[var(--color-black-alt)]']" (click)="ctrlTipoSeguro.setValue(!ctrlTipoSeguro.value)">
+                    <span>{{ctrlTipoSeguro.value ? 'Cancelar consulta tipo Seguro' : '¿Que tipo de seguro necesito?'}}</span>
                     <div class="absolute" [ngClass]="listRespuestas.length > 0 ? 'right-2 inset-y-0 content-center' : 'bottom-4 right-4'">
                         <div class="rounded-full bg-white flex justify-center items-center w-10 h-10">
                             <img src="assets/svg/icon-world.svg" alt=""/>
@@ -22,13 +22,71 @@
             </div>
         </div>
         <div class="flex flex-col gap-2.5 w-11/12 self-center overflow-auto hide-scrollbar" #chatContainer>
-            <div class="flex flex-row" *ngFor="let interaccion of listRespuestas, index as i">
+            <div class="flex flex-row" *ngFor="let interaccion of listRespuestas, index as i" [formGroup]="formTipoSeguro">
                 <div class="rounded-lg border py-4 px-6 w-full" [ngClass]="[interaccion.rol == 'system' ? 'text-start border-l-8 !border-l-[var(--color-claro)]' : 'text-end border-r-8 !border-r-[var(--color-base-claro)]', compartidoService.ctrlModoOscuro.value ? 'styleRespuestaDark' : 'styleRespuestaLight']">
-                    <span *ngIf="interaccion.respuestaRealizada" class="whitespace-pre-line textOptions">{{interaccion.interaccion}}</span>
-                    <div *ngIf="!interaccion.respuestaRealizada" class="loading">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+                    <div *ngIf="interaccion.tipoMensaje == 'texto'">
+                        <span *ngIf="interaccion.respuestaRealizada" class="whitespace-pre-line textOptions">{{interaccion.interaccion}}</span>
+                        <div *ngIf="!interaccion.respuestaRealizada" class="loading">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                    <div *ngIf="interaccion.tipoMensaje == 'marcar'">
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 1">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg1, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaUno" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 2">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg2, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaDos" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 3">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg3, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaTres" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 4">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg4, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaCuatro" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 5">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg5, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaCinco" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 6">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg6, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaSeis" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 7">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg7, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaSiete" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 8">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg8, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaOcho" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-2.5" *ngIf="interaccion.ordenPregunta == 9">
+                            <div class="flex items-center gap-2" *ngFor="let options of listPreg9, index as i">
+                                <input [id]="options.iden + i" type="radio" formControlName="ctrlPreguntaNueve" [value]="options.value" class="bordColorEstablecido w-4 h-4 focusCampo dark:focusCampo">
+                                <label [for]="options.iden + i" class="text-sm font-medium">{{options.value}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

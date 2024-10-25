@@ -9,6 +9,8 @@ export interface RequestComunicacionChatbotRNN{
 
 export interface StructureInteraccionChatbot{
     rol: string;
+    tipoMensaje: 'texto' | 'marcar';
+    ordenPregunta?: number;
     interaccion: string;
     respuestaRealizada: boolean
 }
