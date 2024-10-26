@@ -37,6 +37,9 @@ export class SidenavComponent {
 
   ngOnInit(){
     if (this.userData) {
+      if (this.userData.color == 1) {
+        this.funcionesCompartidasService.ctrlModoOscuro.setValue(true);
+      }
       if (this.userData.role !== "ROLE_USER") {
         this.adminLogged = true;
       }

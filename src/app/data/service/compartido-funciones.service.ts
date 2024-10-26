@@ -10,5 +10,16 @@ export class CompartidoFuncionesService {
   ctrlFiltroSeguro = new FormControl();
   ctrlNotificaciones = new FormControl(false);
 
-  constructor() { }
+  constructor() { 
+    this.ctrlModoOscuro.valueChanges.subscribe((data)=>{
+      if (JSON.parse(localStorage.getItem('usrChatbotSeguro')!)) {        
+        if (data) {
+          JSON.parse(localStorage.getItem('usrChatbotSeguro')!).color = 1;
+        }
+        else{
+          JSON.parse(localStorage.getItem('usrChatbotSeguro')!).color = 0;
+        }
+      }
+    })
+  }
 }
