@@ -30,9 +30,9 @@ export class BtnComponent {
       'text-white': true,
     },
     danger: {
-      'bg-danger-700': true,
-      'hover:bg-danger-800': true,
-      'focus:ring-danger-300': true,
+      'bg-red-700': true,
+      'hover:bg-red-800': true,
+      'focus:ring-red-300': true,
       'text-white': true,
     },
     light: {

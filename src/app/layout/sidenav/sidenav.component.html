@@ -20,11 +20,11 @@
                 <app-icon icon="faAdd" class="w-[18.94px] cursor-pointer" (click)="openDialogAddArchivos()" matTooltip="Añadir contrato por ver"></app-icon>
             </div>
             <div class="flex flex-col gap-2.5">
-                <div class="flex flex-row gap-2.5 pr-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200">
+                <div class="flex flex-row gap-2.5 px-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200" (click)="openDocument('')">
                     <img src="assets/svg/icon-sidenav-bubble-text.svg" alt=""/>
                     <span>TyC - Seguro regular.pdf</span>
                 </div>
-                <div class="flex flex-row gap-2.5 pr-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200">
+                <div class="flex flex-row gap-2.5 px-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200" (click)="openDocument('')">
                     <img src="assets/svg/icon-sidenav-bubble-text.svg" alt=""/>
                     <span>Coberturas.pdf</span>
                 </div>

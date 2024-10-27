@@ -4,6 +4,7 @@ import { CompartidoFuncionesService } from 'src/app/data/service/compartido-func
 import { AddContratoUserComponent } from './add-contrato-user/add-contrato-user.component';
 import { ContactWithAdministratorComponent } from './contact-with-administrator/contact-with-administrator.component';
 import { DialogValoracionComponent } from './dialog-valoracion/dialog-valoracion.component';
+import { DialogShowArchivoComponent } from './dialog-show-archivo/dialog-show-archivo.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -50,6 +51,18 @@ export class SidenavComponent {
     const dialogRef = this.dialog.open(AddContratoUserComponent,{
       width:'80%',
       maxWidth:'585px'
+    })
+    dialogRef.closed.subscribe(data =>{
+      
+    })
+  }
+
+  openDocument(obj: any){
+    const dialogRef = this.dialog.open(DialogShowArchivoComponent,{
+      width:'80%',
+      maxWidth:'785px',
+      height: '80%',
+      data: obj
     })
     dialogRef.closed.subscribe(data =>{
       

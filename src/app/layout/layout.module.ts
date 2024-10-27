@@ -13,6 +13,7 @@ import { UpdateDataUserComponent } from './toolbar/update-data-user/update-data-
 import { AddContratoUserComponent } from './sidenav/add-contrato-user/add-contrato-user.component';
 import { ContactWithAdministratorComponent } from './sidenav/contact-with-administrator/contact-with-administrator.component';
 import { DialogValoracionComponent } from './sidenav/dialog-valoracion/dialog-valoracion.component';
+import { DialogShowArchivoComponent } from './sidenav/dialog-show-archivo/dialog-show-archivo.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DialogValoracionComponent } from './sidenav/dialog-valoracion/dialog-va
     UpdateDataUserComponent,
     AddContratoUserComponent,
     ContactWithAdministratorComponent,
-    DialogValoracionComponent
+    DialogValoracionComponent,
+    DialogShowArchivoComponent
   ],
   imports: [
     CommonModule,

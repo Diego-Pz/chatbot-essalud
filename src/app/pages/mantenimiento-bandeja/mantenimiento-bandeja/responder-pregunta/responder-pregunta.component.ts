@@ -84,7 +84,7 @@ export class ResponderPreguntaComponent {
 
     return {
       idComment: this.data.id,
-      response: respuesta
+      ask: respuesta
     };
   }
 
