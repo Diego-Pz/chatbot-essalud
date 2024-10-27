@@ -46,3 +46,15 @@
     border-color: var(--color-a-degrade);
     color: var(--color-fondo-claro);
 }
+
+.listadoArchivo{
+    .opcionesExtra{
+        display: none;
+    }
+}
+
+.listadoArchivo:hover{
+    .opcionesExtra{
+        display: flex;
+    }
+}

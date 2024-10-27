@@ -5,6 +5,8 @@ import { AddContratoUserComponent } from './add-contrato-user/add-contrato-user.
 import { ContactWithAdministratorComponent } from './contact-with-administrator/contact-with-administrator.component';
 import { DialogValoracionComponent } from './dialog-valoracion/dialog-valoracion.component';
 import { DialogShowArchivoComponent } from './dialog-show-archivo/dialog-show-archivo.component';
+import { ArchivosSegurosService } from 'src/app/data/service/archivos-seguros.service';
+import { NotificationService } from 'src/app/data/service/notification.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -12,6 +14,8 @@ import { DialogShowArchivoComponent } from './dialog-show-archivo/dialog-show-ar
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
+  listArchivosUsuario: any[] = [];
+  waitListArchivos = false;
 
   listOpcionesFiltro: any[] = [
     {value: 1, tipo: 'Regular'},
@@ -32,6 +36,8 @@ export class SidenavComponent {
   userData = JSON.parse(localStorage.getItem('usrChatbotSeguro')!);
 
   constructor(public funcionesCompartidasService : CompartidoFuncionesService,
+              private archivosService            : ArchivosSegurosService,
+              private notificationService        : NotificationService,
               private dialog: Dialog,){
 
   }
@@ -44,16 +50,61 @@ export class SidenavComponent {
       if (this.userData.role !== "ROLE_USER") {
         this.adminLogged = true;
       }
+      this.getListArchivos()
     }
+  }
+
+  getListArchivos(){
+    this.waitListArchivos = true;
+    this.archivosService.getListArchivos({identification: this.userData.identification}).subscribe({
+      next: (data)=>{
+        this.waitListArchivos = false;
+        data.data.forEach((element: any) => {
+          let evalNombre = element.name_insurance.split('.')[0];
+          switch (evalNombre) {
+            case 'document-poliza':
+              element.nombre = 'Seguro Regular.pdf';
+              element.typeSeguro = 1;
+              break;
+            case 'document-poliza2':
+              element.nombre = 'Seguro Potestativo.pdf';
+              element.typeSeguro = 2;
+              break;
+            case 'document-poliza3':
+              element.nombre = 'Seguro Trabajo de Riesgo.pdf';
+              element.typeSeguro = 3;
+              break;
+            case 'document-poliza4':
+              element.nombre = 'Seguro Agrario.pdf';
+              element.typeSeguro = 4;
+              break;
+            case 'document-poliza5':
+              element.nombre = 'Seguro Contra Accidentes.pdf';
+              element.typeSeguro = 5;
+              break;
+          }
+        });
+        this.listArchivosUsuario = data.data;
+        console.log(this.listArchivosUsuario)
+        
+      },
+      error: (error)=>{
+        this.waitListArchivos = false;
+        this.notificationService.warning(error.error.detail);
+      }
+    })
   }
 
   openDialogAddArchivos(){
     const dialogRef = this.dialog.open(AddContratoUserComponent,{
       width:'80%',
-      maxWidth:'585px'
+      maxWidth:'585px',
+      data: this.listArchivosUsuario
     })
     dialogRef.closed.subscribe(data =>{
-      
+      if (data == 1) {
+        this.getListArchivos();
+      }
     })
   }
 
@@ -87,5 +138,24 @@ export class SidenavComponent {
     dialogRef.closed.subscribe(data =>{
       
     })
+  }
+
+  activeNotification(opt: any, event: MouseEvent){
+    event.stopPropagation();
+    this.archivosService.registerEditArchivo({
+      idInsurance: opt.id,
+      identification: opt.identification,
+      nameInsurance: opt.name_insurance,
+      value: (opt.value == 1 ? 0 : 1)
+    }).subscribe({
+      next: (data)=>{
+        this.notificationService.success(`Se ${opt.value == 1 ? 'deshabilitó' : 'habilitó'} el seguimiento del contrato`);
+        this.getListArchivos();
+      },
+      error: (error)=>{
+        this.notificationService.warning(error.error.detail);
+      }
+    })
+    console.log(opt);
   }
 }

@@ -12,7 +12,7 @@
                     <app-icon [pulse]="true" icon="faSpinner"></app-icon>
                     <b>Obteniendo Notificaciones</b>
                 </div>
-                <div class="flex flex-col max-h-80 overflow-auto h-full hide-scrollbar" *ngIf="!waitListaNotificaciones">
+                <div class="flex flex-col max-h-80 overflow-auto h-full contenidoTablaMutada" *ngIf="!waitListaNotificaciones">
                     <div class="h-full w-full flex justify-center items-center font-semibold" *ngIf="listNotificaciones.length == 0">
                         <span>No se tienen notificaciones</span>
                     </div>

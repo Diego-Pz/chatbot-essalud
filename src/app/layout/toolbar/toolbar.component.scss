@@ -6,3 +6,22 @@
     align-items: center;
     padding: 0.5rem 0.25rem;
 }
+
+/* Estilo moderno del scroll */
+.contenidoTablaMutada::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.contenidoTablaMutada::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Fondo del track */
+}
+
+.contenidoTablaMutada::-webkit-scrollbar-thumb {
+    background-color: #00B7BE; /* Color del scroll */
+    border-radius: 10px; /* Bordes redondeados */
+}
+
+.contenidoTablaMutada::-webkit-scrollbar-thumb:hover {
+    background-color: #008F92; /* Color al pasar el mouse */
+}

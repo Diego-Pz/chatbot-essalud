@@ -20,6 +20,10 @@ export class DialogShowArchivoComponent {
               private notificationService           : NotificationService,){
               
   }
+  ngOnInit(){
+    this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(`assets/pdf/${this.data.name_insurance}`);
+    console.log(this.pdfSrc)
+  }
   
   checkValid(){
     

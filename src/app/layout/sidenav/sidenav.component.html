@@ -1,4 +1,4 @@
-<div class="w-full relative h-full flex flex-col gap-2.5 p-2.5 botonApariencia !rounded-none" [ngClass]="[userData ? '' : 'justify-between', funcionesCompartidasService.ctrlModoOscuro.value ? 'bg-[#373739]' : 'bg-[#F7F2FA]']">
+<div class="w-full relative h-full flex flex-col overflow-auto gap-2.5 p-2.5 botonApariencia !rounded-none min-w-[250px]" [ngClass]="[userData ? '' : 'justify-between', funcionesCompartidasService.ctrlModoOscuro.value ? 'bg-[#373739]' : 'bg-[#F7F2FA]']">
     <div class="py-[7px] flex flex-row shrink-0" [ngClass]="funcionesCompartidasService.ctrlModoOscuro.value ? 'invert' : ''">
         <div class="p-2 rounded-2xl hover:botonApariencia hover:cursor-pointer hover:bg-gray-200 select-none" routerLink="/">
             <div class="px-[3px] py-1.5">
@@ -19,14 +19,27 @@
                 <span class="font-bold text-[#1D1B20]">Archivos recientes</span>
                 <app-icon icon="faAdd" class="w-[18.94px] cursor-pointer" (click)="openDialogAddArchivos()" matTooltip="Añadir contrato por ver"></app-icon>
             </div>
-            <div class="flex flex-col gap-2.5">
-                <div class="flex flex-row gap-2.5 px-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200" (click)="openDocument('')">
-                    <img src="assets/svg/icon-sidenav-bubble-text.svg" alt=""/>
-                    <span>TyC - Seguro regular.pdf</span>
+            <div class="flex flex-col gap-2.5 min-h-20 min-x-[223px] relative">
+                <div class="w-full h-full flex flex-col text-center items-center justify-center gap-2.5 rounded absolute bg-[#FFFFFFBB]" *ngIf="waitListArchivos">
+                    <app-icon [pulse]="true" icon="faSpinner"></app-icon>
+                    <b>Obteniendo Archivos</b>
                 </div>
-                <div class="flex flex-row gap-2.5 px-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200" (click)="openDocument('')">
-                    <img src="assets/svg/icon-sidenav-bubble-text.svg" alt=""/>
-                    <span>Coberturas.pdf</span>
+                <div class="w-full h-full flex flex-col text-center items-center justify-center gap-2.5 w-[223px]" *ngIf="!waitListArchivos && listArchivosUsuario.length == 0">
+                    <b>No se cuenta con archivos seleccionados, añade uno</b>
+                </div>
+                <div class="flex flex-row gap-1 justify-between text-xs px-2.5 py-1.5 rounded cursor-pointer hover:bg-gray-200 w-[223px] listadoArchivo" *ngFor="let opcionArchivo of listArchivosUsuario, index as i" (click)="openDocument(opcionArchivo)">
+                    <div class="flex flex-row gap-2.5 grow">
+                        <img class="w-4" src="assets/svg/icon-sidenav-bubble-text.svg" alt=""/>
+                        <span class="content-center">{{opcionArchivo.nombre}}</span>
+                    </div>
+                    <div class="flex-row gap-1 shrink-0 !text-sm opcionesExtra">
+                        <div class="px-0.5" (click)="activeNotification(opcionArchivo, $event)">
+                            <app-icon [icon]="opcionArchivo.value == 1 ? 'faBell' : 'faBellSlash'"></app-icon>
+                        </div>
+                        <div class="px-0.5">
+                            <app-icon icon="faTrash"></app-icon>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
