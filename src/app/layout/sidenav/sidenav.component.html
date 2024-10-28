@@ -36,7 +36,7 @@
                         <div class="px-0.5" (click)="activeNotification(opcionArchivo, $event)">
                             <app-icon [icon]="opcionArchivo.value == 1 ? 'faBell' : 'faBellSlash'"></app-icon>
                         </div>
-                        <div class="px-0.5">
+                        <div class="px-0.5" (click)="deleteArchivo(opcionArchivo, $event)">
                             <app-icon icon="faTrash"></app-icon>
                         </div>
                     </div>

@@ -156,6 +156,18 @@ export class SidenavComponent {
         this.notificationService.warning(error.error.detail);
       }
     })
-    console.log(opt);
+  }
+  
+  deleteArchivo(opt: any, event: MouseEvent){
+    event.stopPropagation();
+    this.archivosService.deletetArchivosList({idInsurance: opt.id}).subscribe({
+      next: (data)=>{
+        this.notificationService.success(`Se eliminó con exito el documento en su bandeja`);
+        this.getListArchivos();
+      },
+      error: (error)=>{
+        this.notificationService.warning(error.error.detail);
+      }
+    })
   }
 }

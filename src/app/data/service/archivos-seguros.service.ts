@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { RequestListArchivos, RequestRegisterArchivo } from '../models/archivos-seguros.model';
+import { RequestDeleteArchivos, RequestListArchivos, RequestRegisterArchivo } from '../models/archivos-seguros.model';
 
 const URL_BASE = `${environment.API}/document/insurance`;
 
@@ -14,6 +14,11 @@ export class ArchivosSegurosService {
 
   getListArchivos(model: RequestListArchivos){
     const url = `${URL_BASE}/list`;
+    return this._httpClient.post<any>(url, model);
+  }
+
+  deletetArchivosList(model: RequestDeleteArchivos){
+    const url = `${URL_BASE}/delete`;
     return this._httpClient.post<any>(url, model);
   }
 
