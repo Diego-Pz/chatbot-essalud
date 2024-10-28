@@ -99,7 +99,10 @@ export class MantenimientoMetricasComponent {
         this.waitData = false;
       }
     })
-
   }
 
+  doanloadFile(){
+    this.metricaService.exportExcelFile(this.dataMetricas);
+    this.notificationService.success('Se está preparando la descarga del reporte, por favor espere');
+  }
 }
