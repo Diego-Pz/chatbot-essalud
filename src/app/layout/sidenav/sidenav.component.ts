@@ -85,7 +85,6 @@ export class SidenavComponent {
           }
         });
         this.listArchivosUsuario = data.data;
-        console.log(this.listArchivosUsuario)
         
       },
       error: (error)=>{

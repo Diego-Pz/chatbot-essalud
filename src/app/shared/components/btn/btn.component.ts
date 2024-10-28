@@ -54,9 +54,9 @@ export class BtnComponent {
       'text-gray-700': true,
     },
     sky: {
-      'bg-sky-700': true,
-      'hover:bg-sky-800': true,
-      'focus:ring-sky-300': true,
+      'bg-green-600': true,
+      'hover:bg-green-700': true,
+      'focus:ring-green-300': true,
       'text-white': true,
     },
     mezclado: {

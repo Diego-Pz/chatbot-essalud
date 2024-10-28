@@ -1,1 +1,103 @@
-<p>mantenimiento-metricas works!</p>
+<div class="flex containerInfo w-full">
+    <div class="border-2 rounded-xl w-full text-[var(--color-a-degrade)] min-h-[240px] relative overflow-auto" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'bg-[#121212] border-gray-300' : 'bg-white border-[var(--color-black-alt)]'">
+        <div class="bg-[#FFFFFF88] w-full h-full z-10 absolute flex flex-col text-2xl items-center justify-center gap-2.5" *ngIf="waitData">
+            <app-icon [pulse]="true" icon="faSpinner"></app-icon>
+            <b>Obteniendo Datos</b>
+        </div>
+        <div class="flex flex-col gap-6 items-center py-8 px-10 relative" *ngIf="!waitData">
+            <span class="text-2xl font-semibold text-center">Métricas de interacciones</span>
+            <app-btn class="absolute right-10 top-8" color="sky">
+                <div class="flex flex-row gap-1">
+                    <app-icon icon="faDownload"></app-icon>
+                    <span>Generar informe</span>
+                </div>
+            </app-btn>
+            <div class="flex flex-col gap-2.5 w-full">
+                <div class="flex flex-row gap-2.5 w-full">
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Usuarios Registrados</span>
+                        </div>
+                        <div class="font-medium text-center py-4 text-6xl content-center h-full">
+                            <span>{{dataMetricas.userRegistered}}</span>
+                        </div>
+                    </div>
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg text-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Preguntas por Registrados</span>
+                        </div>
+                        <div class="font-medium text-center py-4 text-6xl content-center h-full">
+                            <span>{{dataMetricas.questionsRegistered}}</span>
+                        </div>
+                    </div>
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg text-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Preguntas por No Registrados</span>
+                        </div>
+                        <div class="font-medium text-center py-4 text-6xl content-center h-full">
+                            <span>{{dataMetricas.questionsUnregistered}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-2.5 w-full">
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Usuarios Masculinos</span>
+                        </div>
+                        <div class="font-medium text-center p-4 text-6xl content-center h-full">
+                            <div class="flex flex-row gap-2.5 justify-center">
+                                <div class="text-center">
+                                    <span>{{dataMetricas.man}}</span>
+                                </div>
+                                <app-icon class="shrink-0" icon="faPerson" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-white' : 'text-[var(--color-black-alt)]'"></app-icon>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg text-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Usuarios Femeninos</span>
+                        </div>
+                        <div class="font-medium text-center p-4 text-6xl content-center h-full">
+                            <div class="flex flex-row gap-2.5 justify-center">
+                                <div class="text-center">
+                                    <span>{{dataMetricas.women}}</span>
+                                </div>
+                                <app-icon class="shrink-0" icon="faPersonDress" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-white' : 'text-[var(--color-black-alt)]'"></app-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-row gap-2.5 w-full">
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Usuarios por Edad</span>
+                        </div>
+                        <div class="font-medium text-center p-4 text-6xl content-center h-full">
+                            <apx-chart class="block w-full"
+                              [series]="chartOptions.series"
+                              [chart]="chartOptions.chart"
+                              [dataLabels]="chartOptions.dataLabels"
+                              [plotOptions]="chartOptions.plotOptions"
+                              [xaxis]="chartOptions.xaxis"
+                            ></apx-chart>
+                        </div>
+                    </div>
+                    <div class="rounded border-2 flex flex-col w-full" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                        <div class="flex items-center justify-center py-1.5 border-b-2 bg-[#2d70ff] text-white font-bold text-lg text-center" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'border-gray-300' : 'border-[var(--color-black-alt)]'">
+                            <span>Usuarios por Tipo de Seguro</span>
+                        </div>
+                        <div class="font-medium text-center p-4 text-6xl content-center h-full">
+                            <apx-chart class="block w-full"
+                              [series]="chartSegurosOptions.series"
+                              [chart]="chartSegurosOptions.chart"
+                              [dataLabels]="chartSegurosOptions.dataLabels"
+                              [plotOptions]="chartSegurosOptions.plotOptions"
+                              [xaxis]="chartSegurosOptions.xaxis"
+                            ></apx-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
