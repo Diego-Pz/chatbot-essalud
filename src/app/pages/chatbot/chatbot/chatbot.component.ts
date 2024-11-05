@@ -19,6 +19,14 @@ export class ChatbotComponent {
     ctrlPregunta: ['', Validators.required],
   });
 
+  listOpcionesFiltro: any[] = [
+    {value: 1, tipo: 'Regular'},
+    {value: 2, tipo: 'Potestativo'},
+    {value: 3, tipo: 'Trabajo de Riesgo'},
+    {value: 4, tipo: 'Agrario'},
+    {value: 5, tipo: 'Contra Accidentes'},
+  ];
+
   listPreg: any[] = [
     '¿Cuál es tu edad?',
     '¿Tienes alguna condición médica preexistente? (Diabetes, hipertensión, etc.)',
@@ -218,6 +226,10 @@ export class ChatbotComponent {
       this.dataReady = false;
       let payload = this.getPayloadPregunta();
       this.registerMsg();
+      if (this.compartidoService.ctrlFiltroSeguro.value) {
+        let seguroFiltrado = this.listOpcionesFiltro.find((x)=> x.value == this.compartidoService.ctrlFiltroSeguro.value);
+        payload.question = `Limitando tu respuesta al tipo de Seguro ${seguroFiltrado.tipo}, ` + payload.question;
+      }
       this.chatbotService.realizarConsulta(payload).then((data)=>{
         if (data.code == 200) {
           this.actualizarRespuestaChatbot(data.response);
