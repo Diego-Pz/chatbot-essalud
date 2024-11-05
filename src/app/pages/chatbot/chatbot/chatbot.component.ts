@@ -230,7 +230,7 @@ export class ChatbotComponent {
       })
     }
     else{
-      this.notificationService.warning('Ingrese su pregunta');
+      this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
       this.dataReady = true;
     }
   }
@@ -276,7 +276,7 @@ export class ChatbotComponent {
       })
     }
     else{
-      this.notificationService.warning('Ingrese su pregunta');
+      this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
       this.dataReady = true;
     }
   }

@@ -47,7 +47,15 @@ export class RegisterUserComponent {
           this.router.navigate(['/auth']);
         },
         error: (error)=>{
-          this.notificationService.warning(error.error.error);
+          if (error.error.email) {
+            this.notificationService.warning('Esta dirección de correo ya se encuentra en uso');
+            this.formRegister.controls.ctrlEmail.reset();
+          }
+          if (error.error.identification) {
+            this.notificationService.warning('Este número de documento ya se encuentra en uso');
+            this.formRegister.controls.ctrlUser.reset();
+          }
+          console.log(error)
         }
       })
     }

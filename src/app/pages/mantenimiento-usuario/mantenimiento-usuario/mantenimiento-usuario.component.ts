@@ -36,7 +36,7 @@ export class MantenimientoUsuarioComponent {
   }
 
   ngOnInit(){
-    
+    this.formUpdateUser.controls.ctrlDoc.disable();
   }
 
   findUser(){

@@ -98,7 +98,7 @@
             <div class="botonBorde bg-[#F7F7F9] border-[#C5C5C5] border-solid text-[var(--color-black-alt)] text-[16px] min-w-[280px]" cdkMenu>
                 <div class="flex flex-col" cdkMenuGroup>
                     <div class="flex flex-row items-center justify-between cursor-pointer py-2.5 px-3 hover:bg-gray-200">
-                        <div class="flex flex-row items-center gap-2.5">
+                        <div class="flex flex-row items-center gap-2.5 grow" (click)="funcionesCompartidasService.ctrlModoOscuro.setValue(!funcionesCompartidasService.ctrlModoOscuro.value)">
                             <img src="assets/svg/sidenav/sidenav-icon-moon.svg" alt=""/>
                             <span>Modo oscuro</span>
                         </div>
