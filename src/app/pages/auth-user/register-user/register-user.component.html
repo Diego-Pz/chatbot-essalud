@@ -73,11 +73,11 @@
                   <mat-datepicker #picker (closed)="formRegister.controls.ctrlFechaVenc.setValue(input.value)"></mat-datepicker>
                 </mat-form-field>
                 <div class="relative">
-                  <input #nameInput placeholder="Fecha de Vencimiento *" readonly (click)="picker.open()" formControlName="ctrlFechaVenc" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                  <input #nameInput placeholder="Fecha de Nacimiento *" readonly (click)="picker.open()" formControlName="ctrlFechaVenc" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                 </div>
                 <div *ngIf="formRegister.controls.ctrlFechaVenc.touched && formRegister.controls.ctrlFechaVenc.invalid">
                     <span *ngIf="formRegister.controls.ctrlFechaVenc.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                        Fecha de vencimiento requerida
+                        Fecha de nacimiento requerida
                     </span>
                 </div>
               </div>
