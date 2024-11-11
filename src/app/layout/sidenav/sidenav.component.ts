@@ -18,11 +18,11 @@ export class SidenavComponent {
   waitListArchivos = false;
 
   listOpcionesFiltro: any[] = [
-    {value: 1, tipo: 'Regular'},
-    {value: 2, tipo: 'Potestativo'},
-    {value: 3, tipo: 'Trabajo de Riesgo'},
-    {value: 4, tipo: 'Agrario'},
-    {value: 5, tipo: 'Contra Accidentes'},
+    {value: 1, tipo: 'Regular', contextSeguro: 'Seguro_regular.pdf'},
+    {value: 2, tipo: 'Potestativo', contextSeguro: 'Seguro_potestativo.pdf'},
+    {value: 3, tipo: 'Trabajo de Riesgo', contextSeguro: 'Seguro_complementario.pdf'},
+    {value: 4, tipo: 'Agrario', contextSeguro: 'Seguro_agrario.pdf'},
+    {value: 5, tipo: 'Contra Accidentes', contextSeguro: 'Seguro_contra_accidentes.pdf'},
   ];
 
   optAdministrator: any[] = [

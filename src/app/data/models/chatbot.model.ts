@@ -1,6 +1,7 @@
 export interface RequestComunicacionChatbot{
     question: string;
     identification?: string;
+    context?: string;
 }
 
 export interface RequestComunicacionChatbotRNN{

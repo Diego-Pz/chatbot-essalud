@@ -20,11 +20,11 @@ export class ChatbotComponent {
   });
 
   listOpcionesFiltro: any[] = [
-    {value: 1, tipo: 'Regular'},
-    {value: 2, tipo: 'Potestativo'},
-    {value: 3, tipo: 'Trabajo de Riesgo'},
-    {value: 4, tipo: 'Agrario'},
-    {value: 5, tipo: 'Contra Accidentes'},
+    {value: 1, tipo: 'Regular', contextSeguro: 'Seguro_regular.pdf'},
+    {value: 2, tipo: 'Potestativo', contextSeguro: 'Seguro_potestativo.pdf'},
+    {value: 3, tipo: 'Trabajo de Riesgo', contextSeguro: 'Seguro_complementario.pdf'},
+    {value: 4, tipo: 'Agrario', contextSeguro: 'Seguro_agrario.pdf'},
+    {value: 5, tipo: 'Contra Accidentes', contextSeguro: 'Seguro_contra_accidentes.pdf'},
   ];
 
   listPreg: any[] = [
@@ -228,7 +228,8 @@ export class ChatbotComponent {
       this.registerMsg();
       if (this.compartidoService.ctrlFiltroSeguro.value) {
         let seguroFiltrado = this.listOpcionesFiltro.find((x)=> x.value == this.compartidoService.ctrlFiltroSeguro.value);
-        payload.question = `Limitando tu respuesta al tipo de Seguro ${seguroFiltrado.tipo}, ` + payload.question;
+        console.log(seguroFiltrado)
+        payload.context = seguroFiltrado.contextSeguro;
       }
       this.chatbotService.realizarConsulta(payload).then((data)=>{
         if (data.code == 200) {
@@ -307,7 +308,8 @@ export class ChatbotComponent {
 
   getPayloadPregunta(): RequestComunicacionChatbot{
     let payload: RequestComunicacionChatbot = {
-      question: this.formPregunta.controls.ctrlPregunta.value!
+      question: this.formPregunta.controls.ctrlPregunta.value!,
+      context: null!
     }
 
     if (this.authService.isAuthenticated()) {
