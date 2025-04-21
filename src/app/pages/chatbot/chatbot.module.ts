@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DialogPreguntasFrecuentesComponent } from './components/dialog-preguntas-frecuentes/dialog-preguntas-frecuentes.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DialogConfirmacionComponent } from './components/dialog-confirmacion/dialog-confirmacion.component';
+import { MaterialModule } from 'src/app/material/material.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { DialogConfirmacionComponent } from './components/dialog-confirmacion/di
   imports: [
     CommonModule,
     ChatbotRoutingModule,
+    MaterialModule,
     ReactiveFormsModule,
     SharedModule
   ]
