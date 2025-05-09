@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AppRoute } from 'src/app/data/constants/app-route.constant';
@@ -16,16 +16,35 @@ export class RegisterUserComponent {
   faSpinner = faSpinner;
   wait = false;
   seePass = false;
+  today = new Date();
+  dominiosPermitidos: string[] = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'upc.edu.pe', 'outlook.com',
+    'live.com', 'icloud.com', 'protonmail.com', 'aol.com',
+    'msn.com', 'mail.com', 'zoho.com', 'gmx.com'
+  ];
   
   formRegister = this._formBuilder.group({
-    ctrlUser: ['', Validators.required],
+    ctrlUser: [''],
     ctrlTipo: [null, Validators.required],
     ctrlFechaVenc: ['', Validators.required],
-    ctrlEmail: ['', [Validators.required, Validators.email]],
+    ctrlEmail: ['', [Validators.required, Validators.email, this.dominioEmailValido(this.dominiosPermitidos)]],
     ctrlPass: ['', Validators.required],
     ctrlPassAgain: ['', Validators.required]
   });
 
+  dominioEmailValido(dominios: string[]) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value;
+      if (!valor) return null;
+
+      const partes = valor.split('@');
+      if (partes.length !== 2) return { dominioInvalido: true };
+
+      const dominio = partes[1].toLowerCase();
+      return dominios.includes(dominio) ? null : { dominioInvalido: true };
+    };
+  }
+  
   isMovil = false;
 
   constructor(private router                : Router,
@@ -36,7 +55,23 @@ export class RegisterUserComponent {
   }
 
   ngOnInit(){
+    this.setListeners();
     this.comprobacionMovil();
+  }
+
+  setListeners(){
+    this.formRegister.controls.ctrlTipo.valueChanges.subscribe((data)=>{
+      if (data) {
+        const doc = this.formRegister.controls.ctrlUser;
+        if (data == 1) {
+          doc?.setValidators([Validators.required, Validators.minLength(8), Validators.maxLength(8)]);
+        }
+        else{
+          doc?.setValidators([Validators.required, Validators.minLength(12)]);
+        }
+        doc?.updateValueAndValidity();
+      }
+    })
   }
 
   checkRegister(){
@@ -101,5 +136,11 @@ export class RegisterUserComponent {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.comprobacionMovil();
+  }
+
+  soloNumeros(event: KeyboardEvent): boolean {
+    const patron = /[0-9]/;
+    const charInput = document ? event.key : event.code;
+    return patron.test(charInput);
   }
 }

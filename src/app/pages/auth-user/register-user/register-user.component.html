@@ -58,18 +58,24 @@
                   </div>
                   <div class="flex flex-col gap-1">
                     <div class="relative">
-                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" (keypress)="soloNumeros($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                     </div>
                     <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
                         <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                             N° de Documento requerido
+                        </span>
+                        <span *ngIf="(formRegister.controls.ctrlTipo.value == 1 && (formRegister.controls.ctrlUser.hasError('minlength') || formRegister.controls.ctrlUser.hasError('maxlength')))" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                            DNI debe tener 8 dígitos
+                        </span>
+                        <span *ngIf="(formRegister.controls.ctrlTipo.value == 2 && formRegister.controls.ctrlUser.hasError('minlength'))" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                            CE mínimo 12 dígitos
                         </span>
                     </div>
                   </div>
               </div>
               <div class="flex flex-col gap-1">
                 <mat-form-field style="position: absolute; visibility:hidden;">
-                  <input #input matInput [matDatepicker]="picker">
+                  <input #input matInput [max]="today" [matDatepicker]="picker">
                   <mat-datepicker #picker (closed)="formRegister.controls.ctrlFechaVenc.setValue(input.value)"></mat-datepicker>
                 </mat-form-field>
                 <div class="relative">
@@ -85,12 +91,15 @@
                 <div class="relative">
                   <input #nameInput placeholder="Email *" formControlName="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                 </div>
-                <div *ngIf="formRegister.controls.ctrlEmail.touched && formRegister.controls.ctrlEmail.invalid">
+                <div *ngIf="formRegister.controls.ctrlEmail.touched && formRegister.controls.ctrlEmail.invalid" class="flex flex-col">
                     <span *ngIf="formRegister.controls.ctrlEmail.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                         Correo requerido
                     </span>
                     <span *ngIf="formRegister.controls.ctrlEmail.hasError('email')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                         Formato de correo no valido
+                    </span>
+                    <span *ngIf="!formRegister.controls.ctrlEmail.hasError('email') && formRegister.controls.ctrlEmail.hasError('dominioInvalido')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Dominio del correo no validado
                     </span>
                 </div>
               </div>
