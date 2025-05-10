@@ -16,7 +16,7 @@ import { CompartidoFuncionesService } from 'src/app/data/service/compartido-func
 export class ChatbotComponent {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
   formPregunta = this._formBuilder.group({
-    ctrlPregunta: ['', Validators.required],
+    ctrlPregunta: ['', [Validators.required, Validators.maxLength(500)]],
   });
 
   listOpcionesFiltro: any[] = [
@@ -243,7 +243,9 @@ export class ChatbotComponent {
       })
     }
     else{
-      this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
+      if (this.formPregunta.controls.ctrlPregunta.value == '') {
+        this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
+      }
       this.dataReady = true;
     }
   }
@@ -289,7 +291,9 @@ export class ChatbotComponent {
       })
     }
     else{
-      this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
+      if (this.formPregunta.controls.ctrlPregunta.value == '') {
+        this.notificationService.warning('Debe ingresar una pregunta en el campo de texto antes de enviarse');
+      }
       this.dataReady = true;
     }
   }

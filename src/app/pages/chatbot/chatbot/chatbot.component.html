@@ -93,11 +93,14 @@
         </div>
     </div>
     <div class="flex justify-center items-center p-2.5">
-        <form class="relative flex w-11/12" [formGroup]="formPregunta" (ngSubmit)="sendPregunta()">
+        <form class="relative flex w-11/12 relative" [formGroup]="formPregunta" (ngSubmit)="sendPregunta()">
             <input class="bg-[#ECE6F0] text-[16px] text-[#49454F] leading-6 py-3 pl-4 !rounded-3xl pr-[59px] w-full botonApariencia" formControlName="ctrlPregunta" type="text" placeholder="Escribe un mensaje...">
             <button class="absolute inset-y-0 right-0 flex items-center justify-center pr-2.5 cursor-pointer" typeBtn="submit">
                 <img src="assets/svg/icon-send.svg" alt=""/>
             </button>
+            <div class="absolute font-semibold text-[11px] text-right right-0 bottom-[-24px]" [ngClass]="formPregunta.controls.ctrlPregunta.touched && formPregunta.controls.ctrlPregunta.hasError('maxlength') ? 'text-red-500' : ''">
+                <span>{{formPregunta.controls.ctrlPregunta.touched && formPregunta.controls.ctrlPregunta.hasError('maxlength') ? 'Por favor, sé más breve. - ' : ''}}{{ formPregunta.controls.ctrlPregunta.value?.length || 0 }}/500 caracteres</span>
+            </div>
         </form>
     </div>
 </div>

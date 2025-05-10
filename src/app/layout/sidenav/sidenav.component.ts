@@ -115,7 +115,9 @@ export class SidenavComponent {
       data: obj
     })
     dialogRef.closed.subscribe(data =>{
-      
+      if (data == 2) {
+        this.getListArchivos();
+      }
     })
   }
 

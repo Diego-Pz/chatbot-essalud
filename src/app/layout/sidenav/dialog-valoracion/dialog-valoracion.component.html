@@ -5,17 +5,24 @@
             <div class="flex flex-row gap-5 text-3xl">
                 <app-icon class="cursor-pointer hover:text-yellow-200" *ngFor="let star of opcionesEstrella, index as i" icon="faStar" [ngClass]="star ? 'text-yellow-400' : 'text-gray-400'" (click)="ctrlStars.setValue(i + 1)"></app-icon>
             </div>
-            <div *ngIf="ctrlStars.touched && ctrlStars.invalid">
-                <span *ngIf="ctrlStars.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+            <div *ngIf="ctrlStars.touched && ctrlStars.value == 0" class="self-center">
+                <span *ngIf="ctrlStars.value == 0" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     Puntuación requerida
                 </span>
             </div>
         </div>
         <div class="flex flex-col gap-1 w-3/4">
             <textarea placeholder="Escribe un comentario..." rows="5" [formControl]="ctrlDescripcion" class="w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"></textarea>
-            <div *ngIf="ctrlDescripcion.touched && ctrlDescripcion.invalid">
+            <div class="font-semibold text-[11px] text-right">{{ ctrlDescripcion.value!.length || 0 }}/500 caracteres</div>
+            <div *ngIf="ctrlDescripcion.touched && ctrlDescripcion.invalid" class="flex flex-col">
                 <span *ngIf="ctrlDescripcion.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     Descripción requerida
+                </span>
+                <span *ngIf="ctrlDescripcion.hasError('maxlength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    El comentario no debe superar los 500 caracteres.
+                </span>
+                <span *ngIf="ctrlDescripcion.hasError('forbiddenWords')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    El texto contiene palabras no permitidas.
                 </span>
             </div>
         </div>

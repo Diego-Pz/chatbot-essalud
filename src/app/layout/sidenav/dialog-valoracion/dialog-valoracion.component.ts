@@ -1,7 +1,7 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { RegisterOpinion } from 'src/app/data/models/calificacion.model';
 import { ChatbotService } from 'src/app/data/service/chatbot.service';
 import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
@@ -15,10 +15,44 @@ import { UserServiceService } from 'src/app/data/service/user-service.service';
 })
 export class DialogValoracionComponent {
   waitDataSend: boolean = false;
+  offensiveWords: string[] = [
+    "idiota",
+    "imbécil",
+    "estúpido",
+    "tonto",
+    "gilipollas",
+    "pendejo",
+    "cabron",
+    "maldito",
+    "mierda",
+    "puta",
+    "puto",
+    "jodido",
+    "coño",
+    "culero",
+    "zorra",
+    "perra",
+    "maricón",
+    "mierdoso",
+    "hijo de puta",
+    "carajo",
+    "chingar",
+    "chingado",
+    "verga",
+    "pito",
+    "culito",
+    "cabrón",
+    "mamón",
+    "pajero",
+    "estúpida",
+    "idiota",
+    "imbécil",
+    "naco"
+  ];
 
   opcionesEstrella: boolean[] = [false, false, false, false, false];
   ctrlStars = new FormControl(0, [Validators.required]);
-  ctrlDescripcion = new FormControl(null, [Validators.required]);
+  ctrlDescripcion = new FormControl('', [Validators.required, Validators.maxLength(500), this.forbiddenWordsValidator(this.offensiveWords)]);
 
 
   constructor(public compartidoService            : CompartidoFuncionesService,
@@ -75,5 +109,16 @@ export class DialogValoracionComponent {
       payload.identification = JSON.parse(localStorage.getItem('usrChatbotSeguro')!).identification;
     }
     return payload;
+  }
+
+  forbiddenWordsValidator(words: string[]): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+
+      const value = control.value.toLowerCase();
+      const hasForbiddenWord = words.some(word => value.includes(word.toLowerCase()));
+
+      return hasForbiddenWord ? { forbiddenWords: true } : null;
+    };
   }
 }
