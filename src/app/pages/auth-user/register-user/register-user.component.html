@@ -108,9 +108,12 @@
                   <div class="relative">
                     <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                   </div>
-                  <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid">
+                  <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid" class="flex flex-col">
                       <span *ngIf="formRegister.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                           Contraseña requerida
+                      </span>
+                      <span *ngIf="formRegister.controls.ctrlPass.hasError('passwordStrength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                          La contraseña debe tener al menos una mayúscula, una minúscula y un número
                       </span>
                   </div>
                   <span *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.value != formRegister.controls.ctrlPassAgain.value" class="font-medium text-red-500 text-xs mt-1 ml-1">

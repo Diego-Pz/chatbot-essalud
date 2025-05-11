@@ -28,7 +28,7 @@ export class RegisterUserComponent {
     ctrlTipo: [null, Validators.required],
     ctrlFechaVenc: ['', Validators.required],
     ctrlEmail: ['', [Validators.required, Validators.email, this.dominioEmailValido(this.dominiosPermitidos)]],
-    ctrlPass: ['', Validators.required],
+    ctrlPass: ['', [Validators.required, this.passwordStrengthValidator]],
     ctrlPassAgain: ['', Validators.required]
   });
 
@@ -142,5 +142,19 @@ export class RegisterUserComponent {
     const patron = /[0-9]/;
     const charInput = document ? event.key : event.code;
     return patron.test(charInput);
+  }
+
+  passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+
+    const valid = hasUpperCase && hasLowerCase && hasNumber;
+
+    return valid ? null : { passwordStrength: true };
   }
 }
