@@ -16,6 +16,7 @@ export class RegisterUserComponent {
   faSpinner = faSpinner;
   wait = false;
   seePass = false;
+  esMenor = false;
   today = new Date();
   dominiosPermitidos: string[] = [
     'gmail.com', 'yahoo.com', 'hotmail.com', 'upc.edu.pe', 'outlook.com',
@@ -26,6 +27,7 @@ export class RegisterUserComponent {
   formRegister = this._formBuilder.group({
     ctrlUser: [''],
     ctrlTipo: [null, Validators.required],
+    ctrlDocApoderado: [''],
     ctrlFechaVenc: ['', Validators.required],
     ctrlEmail: ['', [Validators.required, Validators.email, this.dominioEmailValido(this.dominiosPermitidos)]],
     ctrlPass: ['', [Validators.required, this.passwordStrengthValidator]],
@@ -72,14 +74,42 @@ export class RegisterUserComponent {
         doc?.updateValueAndValidity();
       }
     })
+
+    this.formRegister.controls.ctrlFechaVenc.valueChanges.subscribe((data)=>{
+      if (data) {
+        let fechaCalcular = new Date(`${data.split('/')[2]}-${data.split('/')[1]}-${data.split('/')[0]} 00:00`);
+        let hoy = new Date();
+        let edad = hoy.getFullYear() - fechaCalcular.getFullYear();
+        const mes = hoy.getMonth() - fechaCalcular.getMonth();
+        const dia = hoy.getDate() - fechaCalcular.getDate();
+
+        if (mes < 0 || (mes === 0 && dia < 0)) {
+          edad--;
+        }
+
+        const doc = this.formRegister.controls.ctrlDocApoderado;
+
+        if (edad < 18) {
+          this.esMenor = true;
+          doc?.setValidators([Validators.required]);
+        }
+        else{
+          this.esMenor = false;
+          doc?.removeValidators([Validators.required]);
+        }
+        doc?.updateValueAndValidity();
+      }
+    })
   }
 
   checkRegister(){
     if (this.formRegister.valid) {
+      this.wait = true;
       this.authService.registerUser(this.getPayload()).subscribe({
         next: (data)=>{
           this.notificationService.success('Se registró el usuario correctamente');
           this.router.navigate(['/auth']);
+          this.wait = false;
         },
         error: (error)=>{
           if (error.error.email) {
@@ -90,7 +120,7 @@ export class RegisterUserComponent {
             this.notificationService.warning('Este número de documento ya se encuentra en uso');
             this.formRegister.controls.ctrlUser.reset();
           }
-          console.log(error)
+          this.wait = false;
         }
       })
     }
@@ -114,6 +144,7 @@ export class RegisterUserComponent {
     return {
       email: this.formRegister.controls.ctrlEmail.value!,
       identification: this.formRegister.controls.ctrlUser.value!,
+      identification_parent: (this.esMenor ? this.formRegister.controls.ctrlDocApoderado.value! : (null as any)),
       password: this.formRegister.controls.ctrlPass.value!,
       document_type: this.formRegister.controls.ctrlTipo.value!,
       date_expiration: fecha

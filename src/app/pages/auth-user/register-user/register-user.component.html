@@ -87,6 +87,16 @@
                     </span>
                 </div>
               </div>
+              <div class="flex flex-col gap-1" *ngIf="esMenor">
+                <div class="relative">
+                  <input #nameInput placeholder="N° de Documento de Apoderado *" formControlName="ctrlDocApoderado" (keypress)="soloNumeros($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlDocApoderado.touched && formRegister.controls.ctrlDocApoderado.invalid">
+                    <span *ngIf="formRegister.controls.ctrlDocApoderado.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        N° de Documento de Apoderado requerido
+                    </span>
+                </div>
+              </div>
               <div class="flex flex-col gap-1">
                 <div class="relative">
                   <input #nameInput placeholder="Email *" formControlName="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>

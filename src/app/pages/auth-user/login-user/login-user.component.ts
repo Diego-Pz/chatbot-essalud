@@ -50,7 +50,13 @@ export class LoginUserComponent {
           this.wait = false;
         },
         error: (error)=>{
-          this.notificationService.warning('Datos de usuario no válidos, por favor revisar');
+          console.log(error)
+          if (error.error.error) {
+            this.notificationService.warning(error.error.error);
+          }
+          else{
+            this.notificationService.warning('Datos de usuario no válidos, por favor revisar');
+          }
           this.wait = false;
         }
       })
