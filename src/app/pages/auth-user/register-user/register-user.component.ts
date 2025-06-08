@@ -91,11 +91,11 @@ export class RegisterUserComponent {
 
         if (edad < 18) {
           this.esMenor = true;
-          doc?.setValidators([Validators.required]);
+          doc?.setValidators([Validators.required, Validators.minLength(8)]);
         }
         else{
           this.esMenor = false;
-          doc?.removeValidators([Validators.required]);
+          doc?.removeValidators([Validators.required, Validators.minLength(8)]);
         }
         doc?.updateValueAndValidity();
       }
@@ -187,5 +187,12 @@ export class RegisterUserComponent {
     const valid = hasUpperCase && hasLowerCase && hasNumber;
 
     return valid ? null : { passwordStrength: true };
+  }
+  
+  evitarPegadoNoNumerico(event: ClipboardEvent): void {
+    const textoPegado = event.clipboardData?.getData('text');
+    if (textoPegado && /[^0-9]/.test(textoPegado)) {
+      event.preventDefault();
+    }
   }
 }

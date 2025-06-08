@@ -78,7 +78,8 @@ export class LoginUserComponent {
     this.router.navigate(['/' + AppRoute.AUTH + '/' + AppRoute.REGISTER]);
   }
 
-  anulatePreLogin(){
+  returnChatbot(){
+    this.router.navigate(['/']);
   }
 
   comprobacionMovil(){

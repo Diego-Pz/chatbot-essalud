@@ -1,35 +1,111 @@
 <div class="min-h-screen flex flex-col min-[720px]:flex-row items-center justify-center">
     <div class="grow w-full flex justify-center relative" *ngIf="isMovil">
-      <img class="absolute w-[37.5px] right-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnLogin()" src="assets/svg/icon-close-dialog.svg" alt="">
+      <img class="absolute w-[37.5px] right-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnLogin()" src="assets/svg/icon-close-dialog-white.svg" alt="">
         <div class="flex flex-col gap-8 w-4/5 max-w-[500px] pt-9" [formGroup]="formRegister">
           <span class="text-[32px] leading-[32px] font-medium text-center text-white">Registrar</span>
-          <div class="flex flex-col gap-1">
-            <div class="relative">
-              <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
-              <div type="button" class="inset-y-0 mr-4 right-0 absolute pointer-events-none flex items-center">
-                <img class="w-5" src="assets/svg/icon-user.svg" alt="">
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <select formControlName="ctrlTipo"
+                    class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border">
+                    <option [value]="null" disabled selected>Tipos de Documento</option>
+                    <option [value]='1'>DNI</option>
+                    <option [value]='2'>Carnet de Extranjería</option>
+                  </select>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlTipo.touched && formRegister.controls.ctrlTipo.invalid">
+                    <span *ngIf="formRegister.controls.ctrlTipo.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                      Tipo de documento requerido
+                    </span>
+                </div>
               </div>
-            </div>
-            <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
-                <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                    N° de Documento requerido.
-                </span>
-            </div>
-          </div>
-          <div class="flex flex-col gap-1">
-            <div class="relative">
-              <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
-              <div type="button" class="inset-y-0 mr-4 right-0 absolute flex items-center cursor-pointer" (click)="seePass = !seePass">
-                <img class="w-5" src="assets/svg/icon-password.svg" alt="">
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" (keypress)="soloNumeros($event)" (paste)="evitarPegadoNoNumerico($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
+                    <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        N° de Documento requerido
+                    </span>
+                    <span *ngIf="(formRegister.controls.ctrlTipo.value == 1 && (formRegister.controls.ctrlUser.hasError('minlength') || formRegister.controls.ctrlUser.hasError('maxlength')))" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        DNI debe tener 8 dígitos
+                    </span>
+                    <span *ngIf="(formRegister.controls.ctrlTipo.value == 2 && formRegister.controls.ctrlUser.hasError('minlength'))" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        CE mínimo 12 dígitos
+                    </span>
+                </div>
               </div>
-            </div>
-            <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid">
-                <span *ngIf="formRegister.controls.ctrlPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
-                    Contraseña requerida.
+              <div class="flex flex-col gap-1">
+                <mat-form-field style="position: absolute; visibility:hidden;">
+                  <input #input matInput [max]="today" [matDatepicker]="picker">
+                  <mat-datepicker #picker (closed)="formRegister.controls.ctrlFechaVenc.setValue(input.value)"></mat-datepicker>
+                </mat-form-field>
+                <div class="relative">
+                  <input #nameInput placeholder="Fecha de Nacimiento *" readonly (click)="picker.open()" formControlName="ctrlFechaVenc" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlFechaVenc.touched && formRegister.controls.ctrlFechaVenc.invalid">
+                    <span *ngIf="formRegister.controls.ctrlFechaVenc.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Fecha de nacimiento requerida
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1" *ngIf="esMenor">
+                <div class="relative">
+                  <input #nameInput placeholder="N° de Documento de Apoderado *" formControlName="ctrlDocApoderado" (keypress)="soloNumeros($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlDocApoderado.touched && formRegister.controls.ctrlDocApoderado.invalid">
+                    <span *ngIf="formRegister.controls.ctrlDocApoderado.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        N° de Documento de Apoderado requerido
+                    </span>
+                    <span *ngIf="formRegister.controls.ctrlDocApoderado.hasError('minlength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Debe tener al menos 8 caracteres
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="Email *" formControlName="ctrlEmail" type="email" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlEmail.touched && formRegister.controls.ctrlEmail.invalid" class="flex flex-col">
+                    <span *ngIf="formRegister.controls.ctrlEmail.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Correo requerido
+                    </span>
+                    <span *ngIf="formRegister.controls.ctrlEmail.hasError('email')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Formato de correo no valido
+                    </span>
+                    <span *ngIf="!formRegister.controls.ctrlEmail.hasError('email') && formRegister.controls.ctrlEmail.hasError('dominioInvalido')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Dominio del correo no validado
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="Contraseña *" formControlName="ctrlPass" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.invalid" class="flex flex-col">
+                    <span *ngIf="formRegister.controls.ctrlPass.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Contraseña requerida
+                    </span>
+                    <span *ngIf="formRegister.controls.ctrlPass.hasError('passwordStrength')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        La contraseña debe tener al menos una mayúscula, una minúscula y un número
+                    </span>
+                </div>
+                <span *ngIf="formRegister.controls.ctrlPass.touched && formRegister.controls.ctrlPass.value != formRegister.controls.ctrlPassAgain.value" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                    Las contraseñas no coinciden
                 </span>
-            </div>
-          </div>
-          <app-btn class="mt-8" [color]="'base'" (click)="checkRegister()" [loading]="wait">Enviar</app-btn>
+              </div>
+              <div class="flex flex-col gap-1">
+                <div class="relative">
+                  <input #nameInput placeholder="Confirmar contraseña *" formControlName="ctrlPassAgain" [type]="seePass ? 'text' : 'password'" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                </div>
+                <div *ngIf="formRegister.controls.ctrlPassAgain.touched && formRegister.controls.ctrlPassAgain.invalid">
+                    <span *ngIf="formRegister.controls.ctrlPassAgain.hasError('required')" class="font-medium text-[#ffa1a1] text-xs mt-1 ml-1">
+                        Confirmación requerida
+                    </span>
+                </div>
+              </div>
+              <div class="flex flex-col gap-3 items-center">
+                <app-btn class="!text-base w-3/5" [color]="'base'" (click)="checkRegister()" [loading]="wait">REGISTRAR</app-btn>
+              </div>
         </div>
       </div>
       <div class="flex-1 flex justify-center items-center" *ngIf="!isMovil">
@@ -58,7 +134,7 @@
                   </div>
                   <div class="flex flex-col gap-1">
                     <div class="relative">
-                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" (keypress)="soloNumeros($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
+                      <input #nameInput placeholder="N° de Documento *" formControlName="ctrlUser" (keypress)="soloNumeros($event)" (paste)="evitarPegadoNoNumerico($event)" class="w-full rounded border-gray-400 border pl-4 pr-10 py-3 font-light focus:border-blue-200 focus:border"/>
                     </div>
                     <div *ngIf="formRegister.controls.ctrlUser.touched && formRegister.controls.ctrlUser.invalid">
                         <span *ngIf="formRegister.controls.ctrlUser.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
@@ -94,6 +170,9 @@
                 <div *ngIf="formRegister.controls.ctrlDocApoderado.touched && formRegister.controls.ctrlDocApoderado.invalid">
                     <span *ngIf="formRegister.controls.ctrlDocApoderado.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                         N° de Documento de Apoderado requerido
+                    </span>
+                    <span *ngIf="formRegister.controls.ctrlDocApoderado.hasError('minlength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        Debe tener al menos 8 caracteres
                     </span>
                 </div>
               </div>
