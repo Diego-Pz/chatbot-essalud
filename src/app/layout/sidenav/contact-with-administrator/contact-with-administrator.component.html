@@ -22,10 +22,13 @@
         </div>
         <div class="flex flex-col gap-4 items-center w-full" *ngIf="ctrlSelectPag.value == listOpciones[1]">
             <div class="flex flex-col gap-1 min-w-64 w-2/5" *ngIf="!dataEnviada">
-                <input #nameInput placeholder="Escribe el número de teléfono" [formControl]="ctrlTelefono" type="number" class="hide-scrollbar w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
+                <input #nameInput placeholder="Escribe el número de teléfono" [formControl]="ctrlTelefono" (keypress)="soloNumeros($event)" (paste)="evitarPegadoNoNumerico($event)" type="text" class="hide-scrollbar w-full rounded border-gray-400 border px-4 py-3 font-light focus:border-blue-200 focus:border" [ngClass]="compartidoService.ctrlModoOscuro.value ? 'text-gray-200 bg-[#3a3a3a]' : 'text-[var(--color-black-alt)]'"/>
                 <div *ngIf="ctrlTelefono.touched && ctrlTelefono.invalid">
                     <span *ngIf="ctrlTelefono.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                         Número de teléfono requerido
+                    </span>
+                    <span *ngIf="ctrlTelefono.hasError('minlength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                        El número debe ser de 7 dígitos mínimos.
                     </span>
                 </div>
             </div>

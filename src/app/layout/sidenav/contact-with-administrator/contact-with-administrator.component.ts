@@ -20,7 +20,7 @@ export class ContactWithAdministratorComponent {
   ctrlSelectPag = new FormControl(null);
 
   ctrlPregunta = new FormControl('', [Validators.required]);
-  ctrlTelefono = new FormControl(null, [Validators.required]);
+  ctrlTelefono = new FormControl(null, [Validators.required, Validators.minLength(7)]);
 
   listOpciones: any[] = [
     {idOpcion: 1, nombreBtn: 'Redactar Pregunta', nomTitulo: 'Redacte su pregunta'},
@@ -85,6 +85,19 @@ export class ContactWithAdministratorComponent {
               
   close(){
     this._dialogRef.close()
+  }
+
+  soloNumeros(event: KeyboardEvent): boolean {
+    const patron = /[0-9]/;
+    const charInput = document ? event.key : event.code;
+    return patron.test(charInput);
+  }
+  
+  evitarPegadoNoNumerico(event: ClipboardEvent): void {
+    const textoPegado = event.clipboardData?.getData('text');
+    if (textoPegado && /[^0-9]/.test(textoPegado)) {
+      event.preventDefault();
+    }
   }
 
   getPayloadPregunta(): RequestRegisterAsesorPregunta {

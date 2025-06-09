@@ -16,7 +16,7 @@ import { CompartidoFuncionesService } from 'src/app/data/service/compartido-func
 export class ChatbotComponent {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
   formPregunta = this._formBuilder.group({
-    ctrlPregunta: ['', [Validators.required, Validators.maxLength(500)]],
+    ctrlPregunta: ['', [Validators.required, Validators.pattern(/^(?![\s\W_]+$).+/), Validators.maxLength(500)]],
   });
 
   listOpcionesFiltro: any[] = [
