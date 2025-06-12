@@ -48,6 +48,9 @@
                 <span *ngIf="formChangePass.controls.ctrlNewPass.hasError('required')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     Contraseña Nueva requerida
                 </span>
+                <span *ngIf="formChangePass.controls.ctrlNewPass.hasError('passwordStrength')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    La contraseña debe tener al menos una mayúscula, una minúscula y un número
+                </span>
             </div>
             <span *ngIf="formChangePass.controls.ctrlNewPass.touched && formChangePass.controls.ctrlNewPass.value != formChangePass.controls.ctrlConfirmNewPass.value" class="font-medium text-red-500 text-xs mt-1 ml-1">
                 Las contraseñas no coinciden
@@ -76,6 +79,9 @@
                 </span>
                 <span *ngIf="ctrlEmail.hasError('email')" class="font-medium text-red-500 text-xs mt-1 ml-1">
                     Formato de correo no valido
+                </span>
+                <span *ngIf="!ctrlEmail.hasError('email') && ctrlEmail.hasError('dominioInvalido')" class="font-medium text-red-500 text-xs mt-1 ml-1">
+                    Dominio del correo no validado
                 </span>
             </div>
             <span *ngIf="ctrlEmail.touched && ctrlEmail.value != ctrlEmailConfirmacion.value" class="font-medium text-red-500 text-xs mt-1 ml-1">

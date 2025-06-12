@@ -45,6 +45,7 @@ export class MantenimientoUsuarioComponent {
       this.userService.getUserInfo(this.getPayloadPreSearch()).subscribe({
         next: (data)=>{
           this.formUpdateUser.controls.ctrlTypeDoc.setValue(data.document_type);
+          this.formUpdateUser.controls.ctrlTypeDoc.disable();
           this.formUpdateUser.controls.ctrlDoc.setValue(data.identification);
           this.formUpdateUser.controls.ctrlTypeSec.setValue(data.insurance_type);
           this.formUpdateUser.controls.ctrlCorreo.setValue(data.email);

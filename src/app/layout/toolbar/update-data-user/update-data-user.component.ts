@@ -1,7 +1,9 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, ValidationErrors, Validators } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
 import { RequestEditInfoUser } from 'src/app/data/models/user.model';
+import { AuthUserService } from 'src/app/data/service/auth-user.service';
 import { CompartidoFuncionesService } from 'src/app/data/service/compartido-funciones.service';
 import { NotificationService } from 'src/app/data/service/notification.service';
 import { UserServiceService } from 'src/app/data/service/user-service.service';
@@ -18,14 +20,31 @@ export class UpdateDataUserComponent {
   tempSelectPag: any = Object();
   ctrlSelectPag = new FormControl(null);
 
+  dominiosPermitidos: string[] = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'upc.edu.pe', 'outlook.com',
+    'live.com', 'icloud.com', 'protonmail.com', 'aol.com',
+    'msn.com', 'mail.com', 'zoho.com', 'gmx.com'
+  ];
   ctrlTipoSeguro = new FormControl(null, [Validators.required]);
-  ctrlEmail = new FormControl('', [Validators.email, Validators.required]);
+  ctrlEmail = new FormControl('', [Validators.email, Validators.required, this.dominioEmailValido(this.dominiosPermitidos)]);
   ctrlEmailConfirmacion = new FormControl('')
+  dominioEmailValido(dominios: string[]) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value;
+      if (!valor) return null;
+
+      const partes = valor.split('@');
+      if (partes.length !== 2) return { dominioInvalido: true };
+
+      const dominio = partes[1].toLowerCase();
+      return dominios.includes(dominio) ? null : { dominioInvalido: true };
+    };
+  }
   
   showPass = [false, false, false];
   formChangePass = this._formBuilder.group({
-    ctrlActualPsss: ['', Validators.required],
-    ctrlNewPass: ['', Validators.required],
+    ctrlActualPsss: ['', [Validators.required]],
+    ctrlNewPass: ['', [Validators.required, this.passwordStrengthValidator]],
     ctrlConfirmNewPass: ['', Validators.required],
   });
 
@@ -37,6 +56,7 @@ export class UpdateDataUserComponent {
 
   constructor(public compartidoService      : CompartidoFuncionesService,
               private userService           : UserServiceService,
+              private authService           : AuthUserService,
               private _dialogRef            : DialogRef<any>,
               private notificationService   : NotificationService,
               private _formBuilder          : FormBuilder,){}
@@ -56,7 +76,7 @@ export class UpdateDataUserComponent {
     })
   }
 
-  updateValues(){
+  async updateValues(){
     let pasoValidacion = false;
     switch (this.ctrlSelectPag.value) {
       case this.listOpciones[0]:
@@ -69,7 +89,20 @@ export class UpdateDataUserComponent {
         break;
       case this.listOpciones[1]:
         if (this.formChangePass.valid && (this.formChangePass.controls.ctrlNewPass.value === this.formChangePass.controls.ctrlConfirmNewPass.value)){
-          pasoValidacion = true;
+        try {
+          const userData = await firstValueFrom(
+            this.authService.loginUser({
+              identification: JSON.parse(localStorage.getItem('usrChatbotSeguro')!).identification,
+              password: this.formChangePass.controls.ctrlActualPsss.value!
+            })
+          );
+
+          console.log('Respuesta exitosa:', userData);
+          pasoValidacion = true; // solo si no lanza error
+        } catch (error) {
+          this.notificationService.warning('La contraseña actual no coincide, volver a intentarlo. De equivocarse 5 veces se bloqueará el acceso por 1 hora.')
+          pasoValidacion = false;
+        }
         }
         else{
           this.formChangePass.markAllAsTouched();
@@ -129,5 +162,19 @@ export class UpdateDataUserComponent {
     }
 
     return payload;
+  }
+  
+  passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+
+    const valid = hasUpperCase && hasLowerCase && hasNumber;
+
+    return valid ? null : { passwordStrength: true };
   }
 }
