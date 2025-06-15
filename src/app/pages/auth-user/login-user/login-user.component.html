@@ -3,6 +3,7 @@
       <img class="absolute w-[37.5px] left-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnChatbot()" src="assets/svg/icon-return-dialog-white.svg" alt="">
         <div class="flex flex-col gap-8 w-4/5 max-w-[400px]" [formGroup]="formLogin">
           <div class="flex flex-col gap-4 items-center">
+            <img class="h-[100px]" src="assets/png/logo-app-chatbot.png" alt="">
             <span class="text-[32px] leading-[32px] font-medium text-center text-white">Iniciar Sesión</span>
             <mat-divider class="w-full"></mat-divider>
             <span class="text-[28px] leading-[28px] font-medium text-[#bfe6ff] text-center" *ngIf="!preLoginConfirmed">¡Bienvenido!</span>
@@ -45,6 +46,7 @@
         <form class="botonApariencia bg-white py-[50.5px] flex flex-col gap-5 min-[769px]:w-4/5 max-w-[500px] relative" [formGroup]="formLogin" (ngSubmit)="checkLogin()">
           <img class="absolute w-[37.5px] left-3.5 top-3.5 rounded-full hover:bg-gray-200 cursor-pointer" (click)="returnChatbot()" src="assets/svg/icon-return-dialog.svg" alt="">
           <div class="flex flex-col gap-4 px-[39.5px] items-center mb-4 min-[769px]:mb-10">
+            <img class="h-[100px]" src="assets/png/logo-app-chatbot.png" alt="">
             <span class="max-[934px]:text-[18px] text-[32px] leading-[32px] font-medium text-center">Iniciar Sesión</span>
             <mat-divider class="w-full"></mat-divider>
             <span class="max-[934px]:text-[16px] text-[28px] leading-[28px] font-medium text-[var(--color-base-claro)] text-center" *ngIf="!preLoginConfirmed">¡Bienvenido!</span>
