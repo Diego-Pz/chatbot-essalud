@@ -41,6 +41,6 @@
                 </div>
             </ng-template>
         </div>
-        <app-btn *ngIf="!userData" color="bordeado" (click)="returnToLogin()">INICIAR SESIÓN</app-btn>
+        <app-btn *ngIf="!userData" color="bordeado" (click)="returnToLogin()" [matTooltip]="'Acceda a más información sobre seguros de salud en EsSalud'">INICIAR SESIÓN</app-btn>
     </div>
 </div>
